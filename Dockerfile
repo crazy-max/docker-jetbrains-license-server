@@ -1,0 +1,44 @@
+FROM openjdk:8-jre-alpine
+MAINTAINER CrazyMax <crazy-max@users.noreply.github.com>
+
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+
+LABEL org.label-schema.build-date=$BUILD_DATE \
+  org.label-schema.name="jetbrains-license-server" \
+  org.label-schema.description="JetBrains License Server image based on Alpine" \
+  org.label-schema.version=$VERSION \
+  org.label-schema.url="https://github.com/crazy-max/docker-jetbrains-license-server" \
+  org.label-schema.vcs-ref=$VCS_REF \
+  org.label-schema.vcs-url="https://github.com/crazy-max/docker-jetbrains-license-server" \
+  org.label-schema.vendor="CrazyMax" \
+  org.label-schema.schema-version="1.0"
+
+RUN apk --update --no-cache add \
+      ca-certificates curl libressl nginx supervisor tzdata zip \
+  && rm -rf /var/cache/apk/* /tmp/*
+
+ENV JLS_PATH="/opt/jetbrains-license-server" \
+  JLS_VERSION="15802" \
+  JLS_SHA256="e0030be1fd06e2db19576363a388d8b84e7b33c9d48c54f0cfcdc032ddd96181"
+
+RUN mkdir -p "$JLS_PATH" "/data/registration" "/run/nginx" \
+  && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/lsi.zip" \
+  && echo "$JLS_SHA256  /tmp/lsi.zip" | sha256sum -c - | grep OK \
+  && unzip "/tmp/lsi.zip" -d "$JLS_PATH" \
+  && rm -f "/tmp/lsi.zip" \
+  && find "$JLS_PATH" -type f -exec chmod 644 {} \; \
+  && chmod a+x "$JLS_PATH/bin/license-server.sh" \
+  && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
+  && ln -sf "/data/registration" "/root/.jb-license-server" \
+  && touch "/data/access-config.json"
+
+ADD entrypoint.sh /entrypoint.sh
+ADD assets /
+
+EXPOSE 80
+VOLUME [ "/data" ]
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]

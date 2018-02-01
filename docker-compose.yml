@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  proxy:
+    image: jwilder/nginx-proxy:alpine
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./proxy/conf.d:/etc/nginx/conf.d:rw
+      - ./proxy/vhost.d:/etc/nginx/vhost.d:rw
+      - ./proxy/html:/usr/share/nginx/html:rw
+      - ./proxy/certs:/etc/nginx/certs:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    depends_on:
+      - proxy
+    volumes:
+      - ./proxy/certs:/etc/nginx/certs:rw
+      - ./proxy/vhost.d:/etc/nginx/vhost.d:rw
+      - ./proxy/html:/usr/share/nginx/html:rw
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
+
+  app:
+    image: crazymax/jetbrains-license-server:latest
+    depends_on:
+      - letsencrypt
+      - proxy
+    volumes:
+      - ./data:/data
+    environment:
+      - TZ=Europe/Paris
+      - JLS_VIRTUAL_HOSTS=jetbrains-license-server.example.com,an-other-host.example.com
+      - JLS_ACCESS_CONFIG=/data/access-config.json
+      - JLS_STATS_RECIPIENTS=webmaster@example.com,an-other-address@example.com
+      - JLS_SMTP_SERVER=smtp.example.com
+      - JLS_SMTP_PORT=25
+      - JLS_SMTP_USERNAME=smtp@example.com
+      - JLS_SMTP_PASSWORD=
+      - JLS_STATS_FROM=jetbrains@example.com
+      - JLS_STATS_TOKEN=1BFC67F51AAF99E85C2347B72E62C
+      - VIRTUAL_HOST=jetbrains-license-server.example.com
+      - LETSENCRYPT_HOST=jetbrains-license-server.example.com
+      - LETSENCRYPT_EMAIL=webmaster@example.com
+    restart: always

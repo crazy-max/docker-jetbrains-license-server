@@ -1,0 +1,6 @@
+# Jetbrains
+/.idea
+/*.iml
+
+# App
+/.dev
