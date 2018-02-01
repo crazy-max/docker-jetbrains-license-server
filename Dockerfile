@@ -31,7 +31,6 @@ RUN mkdir -p "$JLS_PATH" "/data/registration" "/run/nginx" \
   && echo "$JLS_SHA256  /tmp/lsi.zip" | sha256sum -c - | grep OK \
   && unzip "/tmp/lsi.zip" -d "$JLS_PATH" \
   && rm -f "/tmp/lsi.zip" \
-  && find "$JLS_PATH" -type f -exec chmod 644 {} \; \
   && chmod a+x "$JLS_PATH/bin/license-server.sh" \
   && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
   && ln -sf "/data/registration" "/root/.jb-license-server" \
