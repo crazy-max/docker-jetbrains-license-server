@@ -36,7 +36,7 @@ install:
     -t $DOCKER_USERNAME/$DOCKER_REPONAME .
 
 before_script:
-  - docker run -d -e JLS_VIRTUAL_HOSTS=$WAN_IP --name $DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME
+  - docker run -d -p 8000:80 -e JLS_VIRTUAL_HOSTS=$WAN_IP --name $DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME
   - sleep 20
   - docker logs $DOCKER_REPONAME
 
