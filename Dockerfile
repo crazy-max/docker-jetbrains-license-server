@@ -7,7 +7,7 @@ ARG VERSION
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.name="jetbrains-license-server" \
-  org.label-schema.description="JetBrains License Server image based on Alpine" \
+  org.label-schema.description="JetBrains License Server image based on Alpine Linux" \
   org.label-schema.version=$VERSION \
   org.label-schema.url="https://github.com/crazy-max/docker-jetbrains-license-server" \
   org.label-schema.vcs-ref=$VCS_REF \

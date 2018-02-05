@@ -71,7 +71,7 @@ $ docker run -d -p 8000:80 --name jetbrains-license-server \
 
 ## Update
 
-You can update Matomo automatically through the UI, it works well. But i recommend to recreate the container whenever i push an update :
+Recreate the container whenever i push an update :
 
 ```bash
 docker-compose pull
