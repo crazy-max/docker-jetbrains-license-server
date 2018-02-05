@@ -16,7 +16,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.schema-version="1.0"
 
 RUN apk --update --no-cache add \
-      ca-certificates curl libressl nginx supervisor tzdata zip \
+    ca-certificates curl libressl nginx supervisor tzdata zip \
   && rm -rf /var/cache/apk/* /tmp/*
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
