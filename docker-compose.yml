@@ -39,6 +39,7 @@ services:
     environment:
       - TZ=Europe/Paris
       - JLS_VIRTUAL_HOSTS=jetbrains-license-server.example.com,an-other-host.example.com
+      - JLS_CONTEXT=/
       - JLS_ACCESS_CONFIG=/data/access-config.json
       - JLS_STATS_RECIPIENTS=webmaster@example.com,an-other-address@example.com
       - JLS_SMTP_SERVER=smtp.example.com

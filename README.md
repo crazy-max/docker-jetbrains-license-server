@@ -19,7 +19,6 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 ### Included
 
-* Nginx reverse proxy
 * License server completely customizable via environment variables
 * Registration data and configuration in a single directory
 
@@ -32,8 +31,11 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 ### Environment variables
 
+* `UID` : License server user id (default to `1000`)
+* `GID` : License server group id (default to `1000`)
 * `TZ` : The timezone assigned to the container (default to `UTC`)
-* `JLS_VIRTUAL_HOSTS` : [Virtual hosts](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) where license server will be available (required ; comma delimited for several hosts)
+* `JLS_VIRTUAL_HOSTS` : [Virtual hosts](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) where license server will be available (comma delimited for several hosts)
+* `JLS_CONTEXT` :  [Context path](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) used by the license server (default to : `/`)
 * `JLS_ACCESS_CONFIG` : JSON file to configure [user restrictions](https://www.jetbrains.com/help/license_server/configuring_user_restrictions.html) (default to `/data/access-config.json`)
 * `JLS_STATS_RECIPIENTS` : [Reports recipients](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) email addresses for stats (comma delimited)
 * `JLS_SMTP_SERVER` : SMTP server host to use for sending [stats](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html) (stats disabled if empty)
@@ -49,7 +51,7 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 ### Ports
 
-* `80` : HTTP port
+* `80` : Jetbrains License Server HTTP port
 
 ## Usage
 
@@ -91,7 +93,7 @@ If you've got the following message :
 Passed value of header "Host" is not allowed. Please contact your license server administrator.
 ```
 
-That's because the license server is running behind the Nginx reverse proxy. Please configure virtual hosts using the `JLS_VIRTUAL_HOSTS` variable.
+That's because the license server is running behind a reverse proxy. Please configure virtual hosts using the `JLS_VIRTUAL_HOSTS` variable.
 
 ## How can i help ?
 

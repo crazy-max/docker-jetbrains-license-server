@@ -1,13 +1,32 @@
 #!/bin/sh
 
+TZ=${TZ:-"UTC"}
 JLS_PATH="/opt/jetbrains-license-server"
-JLS_LISTEN_ADDRESS="127.0.0.1"
-JLS_PORT=8080
+JLS_LISTEN_ADDRESS="0.0.0.0"
+JLS_PORT=80
+JLS_CONTEXT=${JLS_CONTEXT:-"/"}
 JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-"/data/access-config.json"}
+
+# Timezone
+echo "Setting timezone to ${TZ}..."
+ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime
+echo ${TZ} > /etc/timezone
+
+# Create docker user
+echo "Creating ${USERNAME} user and group (uid=${UID} ; gid=${GID})..."
+addgroup -g ${GID} ${USERNAME}
+adduser -D -s /bin/sh -G ${USERNAME} -u ${UID} ${USERNAME}
+
+# Init
+echo "Initializing files and folders..."
+mkdir -p /data/registration /var/log/supervisord
+ln -sf "/data/registration" "/root/.jb-license-server"
+touch "/data/access-config.json"
+chown -R ${USERNAME}. /data ${JLS_PATH}
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 echo "Configuring Jetbrains License Server..."
-license-server configure --listen ${JLS_LISTEN_ADDRESS} --port ${JLS_PORT}
+license-server configure --listen ${JLS_LISTEN_ADDRESS} --port ${JLS_PORT} --context ${JLS_CONTEXT}
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 if [ ! -z "$JLS_VIRTUAL_HOSTS" ] ; then
@@ -50,5 +69,9 @@ if [ ! -z "$JLS_STATS_TOKEN" ] ; then
   echo "Enabling stats via API at /$JLS_STATS_TOKEN..."
   license-server configure --reporting.token ${JLS_STATS_TOKEN}
 fi
+
+# Fix perms
+echo "Fixing permissions..."
+chown -R ${USERNAME}. /data ${JLS_PATH}
 
 exec "$@"
