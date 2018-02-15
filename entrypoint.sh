@@ -12,17 +12,11 @@ echo "Setting timezone to ${TZ}..."
 ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime
 echo ${TZ} > /etc/timezone
 
-# Create docker user
-echo "Creating ${USERNAME} user and group (uid=${UID} ; gid=${GID})..."
-addgroup -g ${GID} ${USERNAME}
-adduser -D -s /bin/sh -G ${USERNAME} -u ${UID} ${USERNAME}
-
 # Init
 echo "Initializing files and folders..."
 mkdir -p /data/registration /var/log/supervisord
 ln -sf "/data/registration" "/root/.jb-license-server"
 touch "/data/access-config.json"
-chown -R ${USERNAME}. /data ${JLS_PATH}
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 echo "Configuring Jetbrains License Server..."
@@ -69,9 +63,5 @@ if [ ! -z "$JLS_STATS_TOKEN" ] ; then
   echo "Enabling stats via API at /$JLS_STATS_TOKEN..."
   license-server configure --reporting.token ${JLS_STATS_TOKEN}
 fi
-
-# Fix perms
-echo "Fixing permissions..."
-chown -R ${USERNAME}. /data ${JLS_PATH}
 
 exec "$@"

@@ -31,8 +31,6 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 ### Environment variables
 
-* `UID` : License server user id (default to `1000`)
-* `GID` : License server group id (default to `1000`)
 * `TZ` : The timezone assigned to the container (default to `UTC`)
 * `JLS_VIRTUAL_HOSTS` : [Virtual hosts](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) where license server will be available (comma delimited for several hosts)
 * `JLS_CONTEXT` :  [Context path](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) used by the license server (default to : `/`)

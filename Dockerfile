@@ -21,9 +21,7 @@ RUN apk --update --no-cache add \
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
   JLS_VERSION="15802" \
-  JLS_SHA256="e0030be1fd06e2db19576363a388d8b84e7b33c9d48c54f0cfcdc032ddd96181" \
-  USERNAME="docker" \
-  UID=1000 GID=1000
+  JLS_SHA256="e0030be1fd06e2db19576363a388d8b84e7b33c9d48c54f0cfcdc032ddd96181"
 
 ADD entrypoint.sh /entrypoint.sh
 ADD assets /
