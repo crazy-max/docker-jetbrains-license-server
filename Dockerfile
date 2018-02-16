@@ -15,7 +15,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.vendor="CrazyMax" \
   org.label-schema.schema-version="1.0"
 
-RUN apk --update --no-cache add curl tzdata zip \
+RUN apk --update --no-cache add tzdata \
   && rm -rf /var/cache/apk/* /tmp/*
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
@@ -24,14 +24,18 @@ ENV JLS_PATH="/opt/jetbrains-license-server" \
 
 ADD entrypoint.sh /entrypoint.sh
 
-RUN mkdir -p "$JLS_PATH" \
-  && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/lsi.zip" \
-  && echo "$JLS_SHA256  /tmp/lsi.zip" | sha256sum -c - | grep OK \
-  && unzip "/tmp/lsi.zip" -d "$JLS_PATH" \
-  && rm -f "/tmp/lsi.zip" \
+RUN apk --update --no-cache add -t build-dependencies \
+    curl zip \
+  && mkdir -p "$JLS_PATH" \
+  && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \
+  && echo "$JLS_SHA256  /tmp/jls.zip" | sha256sum -c - | grep OK \
+  && unzip "/tmp/jls.zip" -d "$JLS_PATH" \
+  && rm -f "/tmp/jls.zip" \
   && chmod a+x "$JLS_PATH/bin/license-server.sh" \
   && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
-  && chmod a+x /entrypoint.sh
+  && chmod a+x /entrypoint.sh \
+  && apk del build-dependencies \
+  && rm -rf /var/cache/apk/* /tmp/*
 
 EXPOSE 80
 VOLUME [ "/data" ]

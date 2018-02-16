@@ -6,6 +6,7 @@
 * Timezone was not setted
 * No need of Nginx and Supervisor
 * Error while saving stats
+* Remove build dependencies
 
 ## 15802-RC1 (2018/02/01)
 
