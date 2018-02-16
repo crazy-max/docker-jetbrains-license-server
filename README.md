@@ -36,6 +36,7 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 * `JLS_CONTEXT` :  [Context path](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) used by the license server (default to : `/`)
 * `JLS_ACCESS_CONFIG` : JSON file to configure [user restrictions](https://www.jetbrains.com/help/license_server/configuring_user_restrictions.html) (default to `/data/access-config.json`)
 * `JLS_STATS_RECIPIENTS` : [Reports recipients](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) email addresses for stats (comma delimited)
+* `JLS_REPORT_OUT_OF_LICENSE` : [Warn about lack of licenses](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) every hour following the percentage threshold (default to : `0` = disabled)
 * `JLS_SMTP_SERVER` : SMTP server host to use for sending [stats](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html) (stats disabled if empty)
 * `JLS_SMTP_PORT` : SMTP server port (default to `25`)
 * `JLS_SMTP_USERNAME` : SMTP username (auth disabled if empty)

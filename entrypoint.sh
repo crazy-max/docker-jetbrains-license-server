@@ -14,7 +14,7 @@ echo ${TZ} > /etc/timezone
 
 # Init
 echo "Initializing files and folders..."
-mkdir -p /data/registration /var/log/supervisord
+mkdir -p /data/registration
 ln -sf "/data/registration" "/root/.jb-license-server"
 touch "/data/access-config.json"
 
@@ -52,6 +52,11 @@ if [ ! -z "$JLS_SMTP_SERVER" -a ! -z "$JLS_STATS_RECIPIENTS" ] ; then
   if [ ! -z "$JLS_STATS_FROM" ] ; then
     echo "Setting stats sender to $JLS_STATS_FROM..."
     license-server configure --stats.from ${JLS_STATS_FROM}
+  fi
+
+  if [ "$JLS_REPORT_OUT_OF_LICENSE" -gt 0 ]; then
+    echo "Setting report out of licence to $JLS_REPORT_OUT_OF_LICENSE%..."
+    license-server configure --reporting.out.of.license.threshold ${JLS_REPORT_OUT_OF_LICENSE}
   fi
 
   echo "Stats recipients: $JLS_STATS_RECIPIENTS..."

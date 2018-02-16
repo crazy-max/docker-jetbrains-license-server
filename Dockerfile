@@ -15,8 +15,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.vendor="CrazyMax" \
   org.label-schema.schema-version="1.0"
 
-RUN apk --update --no-cache add \
-    curl supervisor tzdata zip \
+RUN apk --update --no-cache add curl tzdata zip \
   && rm -rf /var/cache/apk/* /tmp/*
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
@@ -24,7 +23,6 @@ ENV JLS_PATH="/opt/jetbrains-license-server" \
   JLS_SHA256="e0030be1fd06e2db19576363a388d8b84e7b33c9d48c54f0cfcdc032ddd96181"
 
 ADD entrypoint.sh /entrypoint.sh
-ADD assets /
 
 RUN mkdir -p "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/lsi.zip" \
@@ -39,4 +37,4 @@ EXPOSE 80
 VOLUME [ "/data" ]
 
 ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
+CMD [ "/usr/local/bin/license-server", "run" ]
