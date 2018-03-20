@@ -37,7 +37,7 @@ install:
     docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
     --build-arg VCS_REF=${TRAVIS_COMMIT::8} \
     --build-arg VERSION=${VERSION} \
-    -t $DOCKER_USERNAME/$DOCKER_REPONAME ./docker/Dockerfile ./docker
+    -t $DOCKER_USERNAME/$DOCKER_REPONAME -f ./docker/Dockerfile ./docker
 
 before_script:
   - docker run -d -p 8000:80 -e JLS_VIRTUAL_HOSTS=$WAN_IP --name $DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME
