@@ -1,5 +1,9 @@
 # Changelog
 
+## 16429-RC1 (2018/03/20)
+
+* Upgrade to JetBrains License Server 16429
+
 ## 15802-RC2 (2018/02/16)
 
 * Add `JLS_CONTEXT` and `JLS_REPORT_OUT_OF_LICENSE` env vars

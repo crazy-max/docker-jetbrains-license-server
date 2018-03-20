@@ -54,7 +54,7 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 ## Usage
 
-Docker compose is the recommended way to run this image. You can use the following [docker compose template](docker-compose.yml), then run the container :
+Docker compose is the recommended way to run this image. You can use the following [docker compose template](docker/docker-compose.yml), then run the container :
 
 ```bash
 docker-compose up -d
