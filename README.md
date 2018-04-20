@@ -24,21 +24,20 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 ### From docker-compose
 
-* Reverse proxy with [nginx-proxy](https://github.com/jwilder/nginx-proxy)
-* Creation/renewal of Let's Encrypt certificates automatically with [letsencrypt-nginx-proxy-companion](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion)
+* [Traefik](https://github.com/containous/traefik-library-image) as reverse proxy and creation/renewal of Let's Encrypt certificates
 
 ## Docker
 
 ### Environment variables
 
-* `TZ` : The timezone assigned to the container (default to `UTC`)
+* `TZ` : The timezone assigned to the container (default `UTC`)
 * `JLS_VIRTUAL_HOSTS` : [Virtual hosts](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) where license server will be available (comma delimited for several hosts)
-* `JLS_CONTEXT` :  [Context path](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) used by the license server (default to : `/`)
-* `JLS_ACCESS_CONFIG` : JSON file to configure [user restrictions](https://www.jetbrains.com/help/license_server/configuring_user_restrictions.html) (default to `/data/access-config.json`)
+* `JLS_CONTEXT` :  [Context path](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) used by the license server (default `/`)
+* `JLS_ACCESS_CONFIG` : JSON file to configure [user restrictions](https://www.jetbrains.com/help/license_server/configuring_user_restrictions.html) (default `/data/access-config.json`)
 * `JLS_STATS_RECIPIENTS` : [Reports recipients](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) email addresses for stats (comma delimited)
-* `JLS_REPORT_OUT_OF_LICENSE` : [Warn about lack of licenses](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) every hour following the percentage threshold (default to : `0` = disabled)
+* `JLS_REPORT_OUT_OF_LICENSE` : [Warn about lack of licenses](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) every hour following the percentage threshold (default `0`)
 * `JLS_SMTP_SERVER` : SMTP server host to use for sending [stats](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html) (stats disabled if empty)
-* `JLS_SMTP_PORT` : SMTP server port (default to `25`)
+* `JLS_SMTP_PORT` : SMTP server port (default `25`)
 * `JLS_SMTP_USERNAME` : SMTP username (auth disabled if empty)
 * `JLS_SMTP_PASSWORD` : SMTP password (auth disabled if empty)
 * `JLS_STATS_FROM` : [From address](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) for stats emails
@@ -57,6 +56,8 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 Docker compose is the recommended way to run this image. You can use the following [docker compose template](docker/docker-compose.yml), then run the container :
 
 ```bash
+touch acme.json
+chmod 600 acme.json
 docker-compose up -d
 docker-compose logs -f
 ```

@@ -1,41 +1,48 @@
 version: '3'
 
 services:
-  proxy:
-    image: jwilder/nginx-proxy:alpine
-    labels:
-      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true
+  traefik:
+    image: traefik:alpine
+    command:
+      - --logLevel=INFO
+      - --defaultentrypoints=http,https
+      - --entryPoints=Name:http Address::80 Redirect.EntryPoint:https
+      - --entryPoints=Name:https Address::443 TLS
+      - --docker
+      - --docker.exposedbydefault=false
+      - --docker.domain=example.com
+      - --acme=false
+      - --acme.acmelogging=true
+      - --acme.email=webmaster@example.com
+      - --acme.storage=acme.json
+      - --acme.entryPoint=https
+      - --acme.onhostrule=true
+      - --acme.httpchallenge=true
     ports:
-      - 80:80
-      - 443:443
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
     volumes:
-      - ./proxy/conf.d:/etc/nginx/conf.d:rw
-      - ./proxy/vhost.d:/etc/nginx/vhost.d:rw
-      - ./proxy/html:/usr/share/nginx/html:rw
-      - ./proxy/certs:/etc/nginx/certs:ro
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    restart: always
-
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    depends_on:
-      - proxy
-    volumes:
-      - ./proxy/certs:/etc/nginx/certs:rw
-      - ./proxy/vhost.d:/etc/nginx/vhost.d:rw
-      - ./proxy/html:/usr/share/nginx/html:rw
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./acme.json:/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: always
 
   app:
     image: crazymax/jetbrains-license-server:latest
     depends_on:
-      - letsencrypt
-      - proxy
+      - traefik
     volumes:
-      - ./data:/data
+      - jetbrains-license-server:/data
+    labels:
+      - traefik.enable=true
+      - traefik.backend=jetbrains-license-server
+      - traefik.port=80
+      - traefik.frontend.rule=Host:jetbrains-license-server.example.com,an-other-host.example.com
     environment:
       - TZ=Europe/Paris
       - JLS_VIRTUAL_HOSTS=jetbrains-license-server.example.com,an-other-host.example.com
@@ -49,7 +56,7 @@ services:
       - JLS_SMTP_PASSWORD=
       - JLS_STATS_FROM=jetbrains@example.com
       - JLS_STATS_TOKEN=1BFC67F51AAF99E85C2347B72E62C
-      - VIRTUAL_HOST=jetbrains-license-server.example.com
-      - LETSENCRYPT_HOST=jetbrains-license-server.example.com
-      - LETSENCRYPT_EMAIL=webmaster@example.com
     restart: always
+
+volumes:
+  jetbrains-license-server:
