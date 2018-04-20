@@ -1,5 +1,10 @@
 # Changelog
 
+## 16743-RC1 (2018/04/20)
+
+* Upgrade to JetBrains License Server 16743
+* Replace Nginx + Let's Encrypt with Traefik (see docker-compose)
+
 ## 16429-RC1 (2018/03/20)
 
 * Upgrade to JetBrains License Server 16429
