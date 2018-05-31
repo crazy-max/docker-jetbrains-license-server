@@ -1,5 +1,9 @@
 # Changelog
 
+## 17043-RC1 (2018/05/31)
+
+* Upgrade to JetBrains License Server 17043
+
 ## 16429-RC2 (2018/04/20)
 
 * JetBrains accidentally published 16743. Revert to 16429 (Issue #1)
