@@ -1,8 +1,8 @@
-version: '3'
+version: '3.2'
 
 services:
   traefik:
-    image: traefik:alpine
+    image: traefik:1.6-alpine
     command:
       - --logLevel=INFO
       - --defaultentrypoints=http,https
