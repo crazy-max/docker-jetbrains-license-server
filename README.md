@@ -50,9 +50,11 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 * `80` : Jetbrains License Server HTTP port
 
-## Usage
+## Use this image
 
-Docker compose is the recommended way to run this image. You can use the following [docker compose template](docker/docker-compose.yml), then run the container :
+### Docker Compose
+
+Docker compose is the recommended way to run this image. Copy the content of folder [examples/compose](examples/compose) in `/var/jls/` on your host for example. Edit the compose and env files with your preferences and run the following commands :
 
 ```bash
 touch acme.json
@@ -61,7 +63,9 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-Or use the following minimal command :
+### Command line
+
+You can also use the following minimal command :
 
 ```bash
 $ docker run -d -p 8000:80 --name jetbrains-license-server \

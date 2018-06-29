@@ -18,6 +18,7 @@ services:
       - --acme.entryPoint=https
       - --acme.onhostrule=true
       - --acme.httpchallenge=true
+      - --acme.httpchallenge.entrypoint=http
     ports:
       - target: 80
         published: 80
