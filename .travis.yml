@@ -5,7 +5,7 @@ services:
 
 env:
   global:
-    - VERSION=17043
+    - VERSION=17211
     - GITHUB_REPO=crazy-max/docker-jetbrains-license-server
     - DOCKER_USERNAME=crazymax
     - DOCKER_REPONAME=jetbrains-license-server
