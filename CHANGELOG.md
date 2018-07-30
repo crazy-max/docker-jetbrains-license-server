@@ -1,5 +1,9 @@
 # Changelog
 
+## 17437-RC1 (2018/07/30)
+
+* Upgrade to JetBrains License Server 17437
+
 ## 17211-RC1 (2018/06/29)
 
 * Upgrade to JetBrains License Server 17211
