@@ -40,15 +40,16 @@ script:
   - docker ps | grep $DOCKER_REPONAME
 
 after_success:
-  - test $TRAVIS_PULL_REQUEST = false
-    && echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG
-    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION
-    && docker push $DOCKER_USERNAME/$DOCKER_REPONAME
-    && echo "$QUAY_PASSWORD" | docker login quay.io --username "$QUAY_USERNAME" --password-stdin
-    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG
-    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION
-    && docker push quay.io/$QUAY_USERNAME/$QUAY_REPONAME
+  - |
+    test $TRAVIS_PULL_REQUEST = false \
+    && echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin \
+    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG \
+    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION \
+    && docker push $DOCKER_USERNAME/$DOCKER_REPONAME \
+    && echo "$QUAY_PASSWORD" | docker login quay.io --username "$QUAY_USERNAME" --password-stdin \
+    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG \
+    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION \
+    && docker push quay.io/$QUAY_USERNAME/$QUAY_REPONAME \
     && curl -X POST $MICROBADGER_HOOK
 
 branches:
