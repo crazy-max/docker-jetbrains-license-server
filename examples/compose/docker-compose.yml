@@ -54,7 +54,7 @@ services:
       - "JLS_SMTP_USERNAME=smtp@example.com"
       - "JLS_SMTP_PASSWORD="
       - "JLS_STATS_FROM=jetbrains@example.com"
-      - "JLS_STATS_TOKEN=1BFC67F51AAF99E85C2347B72E62C"
+      - "JLS_STATS_TOKEN=0123456789ABCDEF"
     restart: always
 
 volumes:
