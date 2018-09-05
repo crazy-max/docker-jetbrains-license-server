@@ -19,8 +19,8 @@ RUN apk --update --no-cache add tzdata \
   && rm -rf /var/cache/apk/* /tmp/*
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
-  JLS_VERSION="17437" \
-  JLS_SHA256="9f15c63e9f40e2bf399b503d77a53ad3e4ff5deefb5d8bf29fad6d281b4be4ca"
+  JLS_VERSION="17768" \
+  JLS_SHA256="ede8a65eaffbfe24807339cd2e2563aa2785c26ae6679e8519613a225074c933"
 
 ADD entrypoint.sh /entrypoint.sh
 
