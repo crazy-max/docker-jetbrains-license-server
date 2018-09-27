@@ -29,10 +29,10 @@ install:
     docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
     --build-arg VCS_REF=${TRAVIS_COMMIT::8} \
     --build-arg VERSION=${VERSION} \
-    -t $DOCKER_USERNAME/$DOCKER_REPONAME .
+    -t docker_build .
 
 before_script:
-  - docker run -d -p 8000:80 -e JLS_VIRTUAL_HOSTS=$WAN_IP --name $DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME
+  - docker run -d -p 8000:80 -e JLS_VIRTUAL_HOSTS=$WAN_IP --name $DOCKER_REPONAME docker_build
   - sleep 20
   - docker logs $DOCKER_REPONAME
 
@@ -43,12 +43,12 @@ after_success:
   - |
     test $TRAVIS_PULL_REQUEST = false \
     && echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin \
-    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG \
-    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION \
+    && docker tag docker_build $DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG \
+    && docker tag docker_build $DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION \
     && docker push $DOCKER_USERNAME/$DOCKER_REPONAME \
     && echo "$QUAY_PASSWORD" | docker login quay.io --username "$QUAY_USERNAME" --password-stdin \
-    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG \
-    && docker tag $DOCKER_USERNAME/$DOCKER_REPONAME quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION \
+    && docker tag docker_build quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG \
+    && docker tag docker_build quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION \
     && docker push quay.io/$QUAY_USERNAME/$QUAY_REPONAME \
     && curl -X POST $MICROBADGER_HOOK
 
