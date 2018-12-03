@@ -7,7 +7,7 @@ ARG VERSION
 LABEL maintainer="CrazyMax" \
   org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.name="jetbrains-license-server" \
-  org.label-schema.description="JetBrains License Server image based on Alpine Linux" \
+  org.label-schema.description="JetBrains License Server" \
   org.label-schema.version=$VERSION \
   org.label-schema.url="https://github.com/crazy-max/docker-jetbrains-license-server" \
   org.label-schema.vcs-ref=$VCS_REF \
@@ -15,16 +15,15 @@ LABEL maintainer="CrazyMax" \
   org.label-schema.vendor="CrazyMax" \
   org.label-schema.schema-version="1.0"
 
-RUN apk --update --no-cache add tzdata \
-  && rm -rf /var/cache/apk/* /tmp/*
-
 ENV JLS_PATH="/opt/jetbrains-license-server" \
   JLS_VERSION="17955" \
   JLS_SHA256="998422a48b2d568e5baafd683f9f52b54e2274a0f526afd367a8b84e81b9ec70"
 
-ADD entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 
-RUN apk --update --no-cache add -t build-dependencies \
+RUN apk --update --no-cache add \
+    tzdata \
+  && apk --update --no-cache add -t build-dependencies \
     curl zip \
   && mkdir -p "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \

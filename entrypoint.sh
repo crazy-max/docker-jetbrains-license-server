@@ -1,11 +1,11 @@
 #!/bin/sh
 
-TZ=${TZ:-"UTC"}
+TZ=${TZ:-UTC}
 JLS_PATH="/opt/jetbrains-license-server"
 JLS_LISTEN_ADDRESS="0.0.0.0"
 JLS_PORT=80
-JLS_CONTEXT=${JLS_CONTEXT:-"/"}
-JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-"/data/access-config.json"}
+JLS_CONTEXT=${JLS_CONTEXT:-/}
+JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-/data/access-config.json}
 
 # Timezone
 echo "Setting timezone to ${TZ}..."
@@ -39,7 +39,7 @@ fi
 
 # https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html
 if [ ! -z "$JLS_SMTP_SERVER" -a ! -z "$JLS_STATS_RECIPIENTS" ] ; then
-  JLS_SMTP_PORT=${JLS_SMTP_PORT:-"25"}
+  JLS_SMTP_PORT=${JLS_SMTP_PORT:-25}
   echo "Enabling User Reporting via SMTP at $JLS_SMTP_SERVER:$JLS_SMTP_PORT..."
   license-server configure --smtp.server ${JLS_SMTP_SERVER} --smtp.server.port ${JLS_SMTP_PORT}
 
