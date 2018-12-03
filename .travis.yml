@@ -6,8 +6,10 @@ services:
 env:
   global:
     - VERSION=17955
+    - DOCKER_LOGIN=crazymax
     - DOCKER_USERNAME=crazymax
     - DOCKER_REPONAME=jetbrains-license-server
+    - QUAY_LOGIN=crazymax
     - QUAY_USERNAME=crazymax
     - QUAY_REPONAME=jetbrains-license-server
     - MICROBADGER_HOOK=https://hooks.microbadger.com/images/crazymax/jetbrains-license-server/PWF7sHnaK1djP4E9r5VY5suUqVk=
@@ -17,40 +19,8 @@ env:
 before_install:
   - sudo apt-get update
   - docker --version
-  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-  - export DOCKER_TAG=$(if [ "$BRANCH" == "master" ]; then echo "latest"; else echo $BRANCH; fi)
-  - export WAN_IP=$(dig +short myip.opendns.com @resolver1.opendns.com)
-  - echo "WAN_IP=$WAN_IP, TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH, DOCKER_TAG=$DOCKER_TAG"
 
-install:
-  - |
-    docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
-    --build-arg VCS_REF=${TRAVIS_COMMIT::8} \
-    --build-arg VERSION=${VERSION} \
-    -t docker_build .
-
-before_script:
-  - docker run -d -p 8000:80 -e JLS_VIRTUAL_HOSTS=$WAN_IP --name $DOCKER_REPONAME docker_build
-  - sleep 20
-  - docker logs $DOCKER_REPONAME
-
-script:
-  - docker ps | grep $DOCKER_REPONAME
-  - |
-    test $TRAVIS_PULL_REQUEST = false \
-    && echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin \
-    && docker tag docker_build $DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG \
-    && docker tag docker_build $DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION \
-    && docker push $DOCKER_USERNAME/$DOCKER_REPONAME \
-    && curl -X POST $MICROBADGER_HOOK \
-    && echo "$QUAY_PASSWORD" | docker login quay.io --username "$QUAY_USERNAME" --password-stdin \
-    && docker tag docker_build quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$DOCKER_TAG \
-    && docker tag docker_build quay.io/$DOCKER_USERNAME/$DOCKER_REPONAME:$VERSION \
-    && docker push quay.io/$QUAY_USERNAME/$QUAY_REPONAME
-
-branches:
-  except:
-    - /^[0-9]/
+script: ./build.sh
 
 notifications:
   webhooks:
