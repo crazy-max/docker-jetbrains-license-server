@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-PROJECT=jetbrains-licenses-server
+PROJECT=jetbrains-license-server
 BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 BUILD_TAG=docker_build
 VCS_REF=${TRAVIS_COMMIT::8}
@@ -11,10 +11,10 @@ RUNNING_LOG_CHECK="is listening on"
 PUSH_LATEST=${PUSH_LATEST:-true}
 DOCKER_USERNAME=${DOCKER_USERNAME:="crazymax"}
 DOCKER_LOGIN=${DOCKER_LOGIN:="crazymax"}
-DOCKER_REPONAME=${DOCKER_REPONAME:="jetbrains-licenses-server"}
+DOCKER_REPONAME=${DOCKER_REPONAME:="jetbrains-license-server"}
 QUAY_USERNAME=${QUAY_USERNAME:="crazymax"}
 QUAY_LOGIN=${QUAY_LOGIN:="crazymax"}
-QUAY_REPONAME=${QUAY_REPONAME:="jetbrains-licenses-server"}
+QUAY_REPONAME=${QUAY_REPONAME:="jetbrains-license-server"}
 
 # Check local or travis
 BRANCH=${TRAVIS_BRANCH:-local}
