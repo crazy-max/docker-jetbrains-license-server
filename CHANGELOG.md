@@ -1,5 +1,9 @@
 # Changelog
 
+## 18692-RC1 (2018/12/25)
+
+* Upgrade to JetBrains License Server 18692
+
 ## 17955-RC1 (2018/09/26)
 
 * Upgrade to JetBrains License Server 17955
