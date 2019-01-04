@@ -37,7 +37,6 @@ RUN apk --update --no-cache add \
   && rm -rf /var/cache/apk/* /tmp/*
 
 EXPOSE 80
-VOLUME [ "/data" ]
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/usr/local/bin/license-server", "run" ]

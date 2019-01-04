@@ -5,7 +5,7 @@ JLS_PATH="/opt/jetbrains-license-server"
 JLS_LISTEN_ADDRESS="0.0.0.0"
 JLS_PORT=80
 JLS_CONTEXT=${JLS_CONTEXT:-/}
-JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-/data/access-config.json}
+JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-/home/access-config.json}
 
 # Timezone
 echo "Setting timezone to ${TZ}..."
@@ -14,9 +14,9 @@ echo ${TZ} > /etc/timezone
 
 # Init
 echo "Initializing files and folders..."
-mkdir -p /data/registration
-ln -sf "/data/registration" "/root/.jb-license-server"
-touch "/data/access-config.json"
+mkdir -p /home/registration
+ln -sf "/home/registration" "/root/.jb-license-server"
+touch "/home/access-config.json"
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 echo "Configuring Jetbrains License Server..."
