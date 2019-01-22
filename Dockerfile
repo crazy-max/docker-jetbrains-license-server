@@ -36,7 +36,7 @@ RUN apk --update --no-cache add \
   && apk del build-dependencies \
   && rm -rf /var/cache/apk/* /tmp/*
 
-EXPOSE 80
+EXPOSE 8000
 VOLUME [ "/data" ]
 
 ENTRYPOINT [ "/entrypoint.sh" ]

@@ -2,7 +2,8 @@ version: "3.2"
 
 services:
   traefik:
-    image: traefik:1.6-alpine
+    image: traefik:1.7-alpine
+    container_name: traefik
     command:
       - "--logLevel=INFO"
       - "--defaultentrypoints=http,https"
@@ -33,6 +34,7 @@ services:
 
   app:
     image: crazymax/jetbrains-license-server:latest
+    container_name: jetbrains_license_server
     depends_on:
       - traefik
     volumes:
@@ -40,7 +42,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.backend=jetbrains-license-server"
-      - "traefik.port=80"
+      - "traefik.port=8000"
       - "traefik.frontend.rule=Host:jetbrains-license-server.example.com,an-other-host.example.com"
     environment:
       - "TZ=Europe/Paris"

@@ -49,7 +49,7 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 ### Ports
 
-* `80` : Jetbrains License Server HTTP port
+* `8000` : Jetbrains License Server HTTP port
 
 ## Use this image
 
@@ -69,7 +69,7 @@ docker-compose logs -f
 You can also use the following minimal command :
 
 ```bash
-$ docker run -d -p 8000:80 --name jetbrains-license-server \
+$ docker run -d -p 8000:8000 --name jetbrains_license_server \
   -e TZ="Europe/Paris" \
   -e JLS_VIRTUAL_HOSTS=jetbrains-license-server.example.com \
   -v $(pwd)/data:/data \

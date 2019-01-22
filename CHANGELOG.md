@@ -1,5 +1,9 @@
 # Changelog
 
+## 18692-RC2 (2019/01/22)
+
+* Bind to unprivileged port : `8000`
+
 ## 18692-RC1 (2018/12/25)
 
 * Upgrade to JetBrains License Server 18692
