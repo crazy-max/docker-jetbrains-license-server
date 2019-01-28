@@ -35,7 +35,18 @@ RUN apt update \
   && apt-get clean && apt auto-remove -y \
   && rm -rf /var/cache/apt/* /tmp/*
 
-EXPOSE 80
+#EXPOSE 80
+
+# ------------------------
+# SSH Server support
+# ------------------------
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends openssh-server \
+    && echo "root:Docker!" | chpasswd
+
+COPY sshd_config /etc/ssh/
+EXPOSE 2222 80
+
 
 COPY license-server.jvmoptions.tmpl ${JLS_PATH}/conf/license-server.jvmoptions
 

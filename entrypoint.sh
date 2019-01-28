@@ -1,5 +1,9 @@
 #!/bin/sh
 
+#SSH server inside the container
+service ssh start
+
+
 TZ=${TZ:-UTC}
 JLS_PATH="/opt/jetbrains-license-server"
 JLS_LISTEN_ADDRESS="0.0.0.0"
