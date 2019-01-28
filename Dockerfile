@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:8-jre-stretch
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -21,10 +21,8 @@ ENV JLS_PATH="/opt/jetbrains-license-server" \
 
 COPY entrypoint.sh /entrypoint.sh
 
-RUN apk --update --no-cache add \
-    tzdata \
-  && apk --update --no-cache add -t build-dependencies \
-    curl zip \
+RUN apt update \ 
+  && apt install -y tzdata build-essential curl unzip \
   && mkdir -p "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \
   && echo "$JLS_SHA256  /tmp/jls.zip" | sha256sum -c - | grep OK \
@@ -33,8 +31,9 @@ RUN apk --update --no-cache add \
   && chmod a+x "$JLS_PATH/bin/license-server.sh" \
   && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
   && chmod a+x /entrypoint.sh \
-  && apk del build-dependencies \
-  && rm -rf /var/cache/apk/* /tmp/*
+  && apt purge -y build-essential \
+  && apt-get clean && apt auto-remove -y \
+  && rm -rf /var/cache/apt/* /tmp/*
 
 EXPOSE 80
 
