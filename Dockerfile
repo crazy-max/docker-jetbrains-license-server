@@ -38,5 +38,7 @@ RUN apk --update --no-cache add \
 
 EXPOSE 80
 
+COPY license-server.jvmoptions.tmpl ${JLS_PATH}/conf/license-server.jvmoptions
+
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/usr/local/bin/license-server", "run" ]
