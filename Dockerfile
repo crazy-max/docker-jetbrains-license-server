@@ -36,25 +36,25 @@ RUN apt update \
 # SSH Server inside container for Azure App Service's web SSH console
 RUN apt-get install -y --no-install-recommends openssh-server \
     && echo "root:Docker!" | chpasswd
+COPY sshd_config /etc/ssh/
 
 # Install Nginx to fix HTTP headers modified by Azure's proxy
 RUN apt-get install -y --no-install-recommends nginx
-
-# cleanup packages
-RUN apt-get clean && apt auto-remove -y \
-  && rm -rf /var/cache/apt/* /tmp/*
-
-COPY sshd_config /etc/ssh/
-EXPOSE 2222 8080
-
-# disabling IPv6 - not needed anymore
-# COPY license-server.jvmoptions.tmpl ${JLS_PATH}/conf/license-server.jvmoptions
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
         && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY nginx.conf /etc/nginx/nginx.conf
+# cleanup packages
+RUN apt-get clean && apt auto-remove -y \
+  && rm -rf /var/cache/apt/* /tmp/*
+
+EXPOSE 2222 8080
+
+# disabling IPv6 - not needed anymore
+# COPY license-server.jvmoptions.tmpl ${JLS_PATH}/conf/license-server.jvmoptions
+
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/usr/local/bin/license-server", "run" ]
