@@ -1,8 +1,10 @@
 #!/bin/sh
 
-#SSH server inside the container
+# SSH server inside the container
 service ssh start
 
+# Nginx for fixing HTTP headers modified by Azure's App Service proxy
+service nginx start
 
 TZ=${TZ:-UTC}
 JLS_PATH="/opt/jetbrains-license-server"
