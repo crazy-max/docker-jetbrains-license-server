@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:8-jre-stretch
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -21,10 +21,8 @@ ENV JLS_PATH="/opt/jetbrains-license-server" \
 
 COPY entrypoint.sh /entrypoint.sh
 
-RUN apk --update --no-cache add \
-    tzdata \
-  && apk --update --no-cache add -t build-dependencies \
-    curl zip \
+RUN apt update \ 
+  && apt-get install -y tzdata build-essential curl unzip \
   && mkdir -p "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \
   && echo "$JLS_SHA256  /tmp/jls.zip" | sha256sum -c - | grep OK \
@@ -33,10 +31,30 @@ RUN apk --update --no-cache add \
   && chmod a+x "$JLS_PATH/bin/license-server.sh" \
   && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
   && chmod a+x /entrypoint.sh \
-  && apk del build-dependencies \
-  && rm -rf /var/cache/apk/* /tmp/*
+  && apt-get purge -y build-essential 
 
-EXPOSE 80
+# SSH Server inside container for Azure App Service's web SSH console
+RUN apt-get install -y --no-install-recommends openssh-server \
+    && echo "root:Docker!" | chpasswd
+COPY sshd_config /etc/ssh/
+
+# Install Nginx to fix HTTP headers modified by Azure's proxy
+RUN apt-get install -y --no-install-recommends nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+        && ln -sf /dev/stderr /var/log/nginx/error.log
+
+# cleanup packages
+RUN apt-get clean && apt auto-remove -y \
+  && rm -rf /var/cache/apt/* /tmp/*
+
+EXPOSE 2222 8080
+
+# disabling IPv6 - not needed anymore
+# COPY license-server.jvmoptions.tmpl ${JLS_PATH}/conf/license-server.jvmoptions
+
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/usr/local/bin/license-server", "run" ]

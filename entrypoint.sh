@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# SSH server inside the container
+service ssh start
+
+# Nginx for fixing HTTP headers modified by Azure's App Service proxy
+service nginx start
+
 TZ=${TZ:-UTC}
 JLS_PATH="/opt/jetbrains-license-server"
 JLS_LISTEN_ADDRESS="0.0.0.0"
@@ -21,6 +27,12 @@ touch "/home/access-config.json"
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 echo "Configuring Jetbrains License Server..."
 license-server configure --listen ${JLS_LISTEN_ADDRESS} --port ${JLS_PORT} --context ${JLS_CONTEXT}
+
+# https://www.jetbrains.com/help/license_server/configuring_secure_connection.html
+if [ ! -z "$JLS_REVERSE_PROXY" ] ; then
+  echo "Configuring reverse proxy..."
+  license-server configure --listen-port 80 --base-url http://${JLS_REVERSE_PROXY}:443
+fi
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 if [ ! -z "$JLS_VIRTUAL_HOSTS" ] ; then
@@ -67,6 +79,12 @@ fi
 if [ ! -z "$JLS_STATS_TOKEN" ] ; then
   echo "Enabling stats via API at /$JLS_STATS_TOKEN..."
   license-server configure --reporting.token ${JLS_STATS_TOKEN}
+fi
+
+# https://www.jetbrains.com/help/license_server/configuring_proxy_settings.html
+if [ -n "$JLS_PROXY_HOST" ] && [ -n "$JLS_PROXY_PORT" ] ; then
+  echo "Enabling HTTP proxy..."
+  license-server configure --https.proxyHost ${JLS_PROXY_HOST} --https.proxyPort ${JLS_PROXY_PORT}
 fi
 
 exec "$@"
