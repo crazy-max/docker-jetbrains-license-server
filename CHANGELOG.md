@@ -1,8 +1,12 @@
 # Changelog
 
+## 19340-RC1 (2019/04/02)
+
+* JetBrains License Server 19488
+
 ## 19340-RC1 (2019/03/15)
 
-* Upgrade to JetBrains License Server 19340
+* JetBrains License Server 19340
 
 ## 18692-RC2 (2019/01/22)
 
@@ -10,27 +14,27 @@
 
 ## 18692-RC1 (2018/12/25)
 
-* Upgrade to JetBrains License Server 18692
+* JetBrains License Server 18692
 
 ## 17955-RC1 (2018/09/26)
 
-* Upgrade to JetBrains License Server 17955
+* JetBrains License Server 17955
 
 ## 17768-RC1 (2018/09/05)
 
-* Upgrade to JetBrains License Server 17768
+* JetBrains License Server 17768
 
 ## 17437-RC1 (2018/07/30)
 
-* Upgrade to JetBrains License Server 17437
+* JetBrains License Server 17437
 
 ## 17211-RC1 (2018/06/29)
 
-* Upgrade to JetBrains License Server 17211
+* JetBrains License Server 17211
 
 ## 17043-RC1 (2018/05/31)
 
-* Upgrade to JetBrains License Server 17043
+* JetBrains License Server 17043
 
 ## 16429-RC2 (2018/04/20)
 
@@ -38,12 +42,12 @@
 
 ## 16743-RC1 (2018/04/20)
 
-* Upgrade to JetBrains License Server 16743
+* JetBrains License Server 16743
 * Replace Nginx + Let's Encrypt with Traefik (see docker-compose)
 
 ## 16429-RC1 (2018/03/20)
 
-* Upgrade to JetBrains License Server 16429
+* JetBrains License Server 16429
 
 ## 15802-RC2 (2018/02/16)
 
