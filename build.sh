@@ -105,11 +105,6 @@ if [[ ! -z ${DOCKER_PASSWORD} ]]; then
     docker tag ${BUILD_TAG} ${DOCKER_USERNAME}/${DOCKER_REPONAME}:${VERSION}
   fi
   docker push ${DOCKER_USERNAME}/${DOCKER_REPONAME}
-  if [[ ! -z ${MICROBADGER_HOOK} ]]; then
-    echo "Call MicroBadger hook"
-    curl -X POST ${MICROBADGER_HOOK}
-    echo
-  fi
   echo
 fi
 if [[ ! -z ${QUAY_PASSWORD} ]]; then
