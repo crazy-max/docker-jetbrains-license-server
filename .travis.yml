@@ -5,7 +5,7 @@ services:
 
 env:
   global:
-    - VERSION=19488
+    - VERSION=20267
     - DOCKER_LOGIN=crazymax
     - DOCKER_USERNAME=crazymax
     - DOCKER_REPONAME=jetbrains-license-server

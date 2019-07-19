@@ -1,5 +1,9 @@
 # Changelog
 
+## 20267-RC1 (2019/07/19)
+
+* JetBrains License Server 20267
+
 ## 19488-RC1 (2019/04/02)
 
 * JetBrains License Server 19488
