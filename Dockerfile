@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM adoptopenjdk/openjdk12:alpine-jre
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -24,7 +24,8 @@ COPY entrypoint.sh /entrypoint.sh
 RUN apk --update --no-cache add \
     tzdata \
   && apk --update --no-cache add -t build-dependencies \
-    curl zip \
+    curl \
+    zip \
   && mkdir -p "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \
   && echo "$JLS_SHA256  /tmp/jls.zip" | sha256sum -c - | grep OK \

@@ -1,5 +1,10 @@
 # Changelog
 
+## 20267-RC2 (2019/07/22)
+
+* OpenJDK JRE 12
+* Alpine Linux 3.10
+
 ## 20267-RC1 (2019/07/19)
 
 * JetBrains License Server 20267
