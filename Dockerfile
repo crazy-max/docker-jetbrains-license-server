@@ -16,8 +16,8 @@ LABEL maintainer="CrazyMax" \
   org.label-schema.schema-version="1.0"
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
-  JLS_VERSION="20267" \
-  JLS_SHA256="5a32e66a05cc52c6ca030de4507b04afedff564e65c47e2fbfe3e7439ab611aa"
+  JLS_VERSION="20308" \
+  JLS_SHA256="15cd436d41b1af8e273b8f8b037d654a9e9d9ca8a5f188e08426ca1024ba143a"
 
 COPY entrypoint.sh /entrypoint.sh
 

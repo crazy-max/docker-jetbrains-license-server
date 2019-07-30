@@ -1,5 +1,9 @@
 # Changelog
 
+## 20308-RC1 (2019/07/30)
+
+* JetBrains License Server 20308
+
 ## 20267-RC2 (2019/07/22)
 
 * OpenJDK JRE 12
