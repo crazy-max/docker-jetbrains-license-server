@@ -42,3 +42,6 @@ VOLUME [ "/data" ]
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/usr/local/bin/license-server", "run" ]
+
+HEALTHCHECK --interval=10s --timeout=5s \
+  CMD license-server status

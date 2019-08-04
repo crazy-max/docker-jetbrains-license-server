@@ -1,5 +1,9 @@
 # Changelog
 
+## 20308-RC2 (2019/08/04)
+
+* Add healthcheck
+
 ## 20308-RC1 (2019/07/30)
 
 * JetBrains License Server 20308
