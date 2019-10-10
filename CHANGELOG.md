@@ -1,5 +1,9 @@
 # Changelog
 
+## 20308-RC4 (2019/10/10)
+
+* Optimize layers
+
 ## 20308-RC3 (2019/10/10)
 
 * Multi-platform Docker image

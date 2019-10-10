@@ -24,22 +24,21 @@ RUN apt-get update \
     curl \
     zip \
     tzdata \
+  && mkdir -p /data "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \
   && echo "$JLS_SHA256  /tmp/jls.zip" | sha256sum -c - | grep OK \
   && unzip "/tmp/jls.zip" -d "$JLS_PATH" \
   && rm -f "/tmp/jls.zip" \
   && chmod a+x "$JLS_PATH/bin/license-server.sh" \
   && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
+  && groupadd -f -g 1000 jls \
+  && useradd -o -s /bin/bash -d /data -u 1000 -g 1000 -m jls \
+  && chown -R jls. /data "$JLS_PATH" \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY entrypoint.sh /entrypoint.sh
-
-RUN mkdir -p /data "$JLS_PATH" \
-  && chmod a+x /entrypoint.sh \
-  && groupadd -f -g 1000 jls \
-  && useradd -o -s /bin/bash -d /data -u 1000 -g 1000 -m jls \
-  && chown -R jls. /data "$JLS_PATH"
+RUN chmod a+x /entrypoint.sh
 
 USER jls
 
