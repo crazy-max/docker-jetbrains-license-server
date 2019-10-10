@@ -1,11 +1,10 @@
 <p align="center"><a href="https://github.com/crazy-max/docker-jetbrains-license-server" target="_blank"><img height="128"src="https://raw.githubusercontent.com/crazy-max/docker-jetbrains-license-server/master/.res/docker-jetbrains-license-server.jpg"></a></p>
 
 <p align="center">
-  <a href="https://hub.docker.com/r/crazymax/jetbrains-license-server/"><img src="https://img.shields.io/badge/dynamic/json.svg?label=version&query=$.results[1].name&url=https://hub.docker.com/v2/repositories/crazymax/jetbrains-license-server/tags&style=flat-square" alt="Latest Version"></a>
-  <a href="https://travis-ci.com/crazy-max/docker-jetbrains-license-server"><img src="https://img.shields.io/travis/com/crazy-max/docker-jetbrains-license-server/master.svg?style=flat-square" alt="Build Status"></a>
+  <a href="https://hub.docker.com/r/crazymax/jetbrains-license-server/tags?page=1&ordering=last_updated"><img src="https://img.shields.io/github/v/tag/crazy-max/docker-jetbrains-license-server?label=version&style=flat-square" alt="Latest Version"></a>
+  <a href="https://github.com/crazy-max/docker-jetbrains-license-server/actions?workflow=build"><img src="https://github.com/crazy-max/docker-jetbrains-license-server/workflows/build/badge.svg" alt="Build Status"></a>
   <a href="https://hub.docker.com/r/crazymax/jetbrains-license-server/"><img src="https://img.shields.io/docker/stars/crazymax/jetbrains-license-server.svg?style=flat-square" alt="Docker Stars"></a>
   <a href="https://hub.docker.com/r/crazymax/jetbrains-license-server/"><img src="https://img.shields.io/docker/pulls/crazymax/jetbrains-license-server.svg?style=flat-square" alt="Docker Pulls"></a>
-  <a href="https://quay.io/repository/crazymax/jetbrains-license-server"><img src="https://quay.io/repository/crazymax/jetbrains-license-server/status?style=flat-square" alt="Docker Repository on Quay"></a>
   <a href="https://www.codacy.com/app/crazy-max/docker-jetbrains-license-server"><img src="https://img.shields.io/codacy/grade/eb420bc3e6ed49ff97cc261602228efa.svg?style=flat-square" alt="Code Quality"></a>
   <br /><a href="https://www.patreon.com/crazymax"><img src="https://img.shields.io/badge/donate-patreon-f96854.svg?logo=patreon&style=flat-square" alt="Support me on Patreon"></a>
   <a href="https://www.paypal.me/crazyws"><img src="https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square" alt="Donate Paypal"></a>
@@ -13,23 +12,33 @@
 
 ## About
 
-🐳 [JetBrains License Server](https://www.jetbrains.com/help/license_server/getting_started.html) Docker image based on Alpine Linux.<br />
+🐳 [JetBrains License Server](https://www.jetbrains.com/help/license_server/getting_started.html) Docker image based on AdoptOpenJDK.<br />
 If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 🐳 Docker images!
 
 💡 Want to be notified of new releases? Check out 🔔 [Diun (Docker Image Update Notifier)](https://github.com/crazy-max/diun) project!
 
 ## Features
 
-### Included
-
 * License server completely customizable via environment variables
 * Registration data and configuration in a single directory
-
-### From docker-compose
-
 * [Traefik](https://github.com/containous/traefik-library-image) as reverse proxy and creation/renewal of Let's Encrypt certificates
 
 ## Docker
+
+### Multi-platform image
+
+Following platforms for this image are available:
+
+```
+$ docker run --rm mplatform/mquery crazymax/jetbrains-license-server:latest
+Image: crazymax/jetbrains-license-server:latest
+ * Manifest List: Yes
+ * Supported platforms:
+   - linux/amd64
+   - linux/arm64
+   - linux/ppc64le
+   - linux/s390x
+```
 
 ### Environment variables
 
@@ -49,6 +58,8 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 ### Volumes
 
 * `/data` : Contains [registration data](https://www.jetbrains.com/help/license_server/migrate.html) and configuration
+
+> :warning: Note that the volume should be owned by uid `1000` and gid `1000`. If you don't give the volume correct permissions, the container may not start.
 
 ### Ports
 
