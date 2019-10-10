@@ -17,7 +17,8 @@ LABEL maintainer="CrazyMax" \
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
   JLS_VERSION="20308" \
-  JLS_SHA256="15cd436d41b1af8e273b8f8b037d654a9e9d9ca8a5f188e08426ca1024ba143a"
+  JLS_SHA256="15cd436d41b1af8e273b8f8b037d654a9e9d9ca8a5f188e08426ca1024ba143a" \
+  TZ="UTC"
 
 COPY entrypoint.sh /entrypoint.sh
 
@@ -44,4 +45,4 @@ ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/usr/local/bin/license-server", "run" ]
 
 HEALTHCHECK --interval=10s --timeout=5s \
-  CMD license-server status
+  CMD license-server status || exit 1
