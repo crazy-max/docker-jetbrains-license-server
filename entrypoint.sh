@@ -8,8 +8,6 @@ JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-/data/access-config.json}
 
 # Init
 echo "Initializing files and folders..."
-mkdir -p /data/registration
-ln -sf "/data/registration" "/root/.jb-license-server"
 touch "/data/access-config.json"
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
@@ -18,7 +16,7 @@ license-server configure --listen ${JLS_LISTEN_ADDRESS} --port ${JLS_PORT} --con
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 if [ ! -z "$JLS_VIRTUAL_HOSTS" ] ; then
-  echo "Following virtual hosts will be used :"
+  echo "Following virtual hosts will be used:"
   for JLS_VIRTUAL_HOST in $(echo ${JLS_VIRTUAL_HOSTS} | tr "," "\n"); do
     echo "-> ${JLS_VIRTUAL_HOST}"
   done
