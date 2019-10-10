@@ -1,0 +1,66 @@
+name: test
+
+on:
+  pull_request:
+    branches: master
+  push:
+    branches: master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Prepare
+        id: prepare
+        run: |
+          echo ::set-output name=build_tag::test
+          echo ::set-output name=container_name::jetbrains-license-server
+          echo ::set-output name=running_timeout::120
+          echo ::set-output name=running_log_check::is listening on
+      -
+        # https://github.com/actions/checkout
+        name: Checkout
+        uses: actions/checkout@v1
+      -
+        # https://github.com/crazy-max/ghaction-docker-buildx
+        name: Set up Docker Buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+      -
+        name: Docker Buildx
+        run: |
+          docker buildx build --load --tag ${{ steps.prepare.outputs.build_tag }} --file Dockerfile .
+      -
+        name: Start container
+        run: |
+          docker rm -f ${{ steps.prepare.outputs.container_name }} > /dev/null 2>&1 || true
+          docker run -d --name ${{ steps.prepare.outputs.container_name }} \
+            -e "JLS_VIRTUAL_HOSTS=docker.test" \
+            ${{ steps.prepare.outputs.build_tag }}
+      -
+        name: Test run
+        run: |
+          TIMEOUT=$((SECONDS + ${{ steps.prepare.outputs.running_timeout }}))
+          while read LOGLINE; do
+            echo ${LOGLINE}
+            if [[ ${LOGLINE} == *"${{ steps.prepare.outputs.running_log_check }}"* ]]; then
+              echo "🎉 Container up!"
+              break
+            fi
+            if [[ $SECONDS -gt ${TIMEOUT} ]]; then
+              >&2 echo "❌ Failed to run ${{ steps.prepare.outputs.container_name }} container"
+              docker rm -f ${{ steps.prepare.outputs.container_name }} > /dev/null 2>&1 || true
+              exit 1
+            fi
+          done < <(docker logs -f ${{ steps.prepare.outputs.container_name }} 2>&1)
+
+          CONTAINER_STATUS=$(docker container inspect --format "{{.State.Status}}" ${{ steps.prepare.outputs.container_name }})
+          if [[ ${CONTAINER_STATUS} != "running" ]]; then
+            >&2 echo "❌ Container ${{ steps.prepare.outputs.container_name }} returned status '$CONTAINER_STATUS'"
+            docker rm -f ${{ steps.prepare.outputs.container_name }} > /dev/null 2>&1 || true
+            exit 1
+          fi
+          docker rm -f ${{ steps.prepare.outputs.container_name }} > /dev/null 2>&1 || true
+          echo
