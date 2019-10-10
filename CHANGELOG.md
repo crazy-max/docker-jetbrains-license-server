@@ -1,5 +1,22 @@
 # Changelog
 
+## 20308-RC3 (2019/10/10)
+
+* Multi-platform Docker image
+* Switch to GitHub Actions
+* :warning: Stop publishing Docker image on Quay
+* :warning: Run as non-root user
+* Set timezone through tzdata
+
+> :warning: **UPGRADE NOTES**
+> As the Docker container now runs as a non-root user, you have to first stop the container and change permissions to `data` volume:
+> ```
+> docker-compose stop
+> chown -R 1000:1000 data/
+> docker-compose pull
+> docker-compose up -d
+> ```
+
 ## 20308-RC2 (2019/08/04)
 
 * Add healthcheck
