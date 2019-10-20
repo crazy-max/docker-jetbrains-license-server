@@ -7,7 +7,6 @@
   name: ":bug: bug"
   color: "b60205"
   description: ""
-  from_name: "bug"
 - # documentation
   name: ":memo: documentation"
   color: "c5def5"
@@ -16,12 +15,10 @@
   name: ":busts_in_silhouette: duplicate"
   color: "cccccc"
   description: ""
-  from_name: "duplicate"
 - # enhancement
   name: ":sparkles: enhancement"
   color: "0054ca"
   description: ""
-  from_name: "enhancement"
 - # feature request
   name: ":bulb: feature request"
   color: "0e8a16"
@@ -38,12 +35,10 @@
   name: ":hatching_chick: good first issue"
   color: "7057ff"
   description: ""
-  from_name: "good first issue"
 - # help wanted
   name: ":pray: help wanted"
   color: "4caf50"
   description: ""
-  from_name: "help wanted"
 - # hold
   name: ":hand: hold"
   color: "24292f"
@@ -52,7 +47,6 @@
   name: ":no_entry_sign: invalid"
   color: "e6e6e6"
   description: ""
-  from_name: "invalid"
 - # maybe bug
   name: ":interrobang: maybe bug"
   color: "ff5722"
@@ -65,7 +59,6 @@
   name: ":question: question"
   color: "3f51b5"
   description: ""
-  from_name: "question"
 - # upstream
   name: ":eyes: upstream"
   color: "fbca04"
@@ -74,4 +67,3 @@
   name: ":coffin: wontfix"
   color: "ffffff"
   description: ""
-  from_name: "wontfix"
