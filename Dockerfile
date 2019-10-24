@@ -21,8 +21,8 @@ LABEL maintainer="CrazyMax" \
   org.label-schema.schema-version="1.0"
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
-  JLS_VERSION="20308" \
-  JLS_SHA256="15cd436d41b1af8e273b8f8b037d654a9e9d9ca8a5f188e08426ca1024ba143a" \
+  JLS_VERSION="21137" \
+  JLS_SHA256="05241f0d41644ecc7679a879c829e57d423e151b997b45c5e986d498d6fe2f21" \
   TZ="UTC"
 
 RUN apt-get update \
