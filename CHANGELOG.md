@@ -1,5 +1,9 @@
 # Changelog
 
+## 21137-RC1 (2019/10/24)
+
+* JetBrains License Server 21137
+
 ## 20308-RC4 (2019/10/10)
 
 * Optimize layers
