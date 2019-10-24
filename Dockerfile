@@ -40,7 +40,7 @@ RUN apt-get update \
   && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
   && groupadd -f -g 1000 jls \
   && useradd -o -s /bin/bash -d /data -u 1000 -g 1000 -m jls \
-  && chown -R jls. /data "$JLS_PATH" \
+  && chown -R jls /data "$JLS_PATH" \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
