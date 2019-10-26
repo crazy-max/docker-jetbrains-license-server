@@ -19,6 +19,8 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 ## Features
 
+* Run as non-root user
+* Multi-platform image
 * License server completely customizable via environment variables
 * Registration data and configuration in a single directory
 * [Traefik](https://github.com/containous/traefik-library-image) as reverse proxy and creation/renewal of Let's Encrypt certificates
