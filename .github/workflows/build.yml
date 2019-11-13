@@ -1,11 +1,13 @@
 name: build
 
 on:
-  pull_request:
-    branches: 'master'
   push:
     branches: 'master'
     tags: '*'
+    paths:
+      - '.github/workflows/build.yml'
+      - 'Dockerfile'
+      - 'entrypoint.sh'
 
 jobs:
   build:
