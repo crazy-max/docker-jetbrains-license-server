@@ -23,7 +23,7 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 * Multi-platform image
 * License server completely customizable via environment variables
 * Registration data and configuration in a single directory
-* [Traefik](https://github.com/containous/traefik-library-image) as reverse proxy and creation/renewal of Let's Encrypt certificates
+* [Traefik](https://github.com/containous/traefik-library-image) as reverse proxy and creation/renewal of Let's Encrypt certificates (see [this template](examples/traefik))
 
 ## Docker
 
@@ -76,8 +76,6 @@ Image: crazymax/jetbrains-license-server:latest
 Docker compose is the recommended way to run this image. Copy the content of folder [examples/compose](examples/compose) in `/var/jls/` on your host for example. Edit the compose and env files with your preferences and run the following commands:
 
 ```bash
-touch acme.json
-chmod 600 acme.json
 docker-compose up -d
 docker-compose logs -f
 ```
@@ -89,7 +87,7 @@ You can also use the following minimal command:
 ```bash
 $ docker run -d -p 8000:8000 --name jetbrains_license_server \
   -e TZ="Europe/Paris" \
-  -e JLS_VIRTUAL_HOSTS=jetbrains-license-server.example.com \
+  -e JLS_VIRTUAL_HOSTS=jls.example.com \
   -v $(pwd)/data:/data \
   crazymax/jetbrains-license-server:latest
 ```

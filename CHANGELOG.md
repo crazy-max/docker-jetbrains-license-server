@@ -1,5 +1,9 @@
 # Changelog
 
+## 21137-RC2 (2019/11/17)
+
+* Allow to set custom `PUID`/`PGID`
+
 ## 21137-RC1 (2019/10/24)
 
 * JetBrains License Server 21137
