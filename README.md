@@ -44,34 +44,36 @@ Image: crazymax/jetbrains-license-server:latest
 
 ### Environment variables
 
-* `TZ` : The timezone assigned to the container (default `UTC`)
-* `JLS_VIRTUAL_HOSTS` : [Virtual hosts](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) where license server will be available (comma delimited for several hosts)
-* `JLS_CONTEXT` :  [Context path](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) used by the license server (default `/`)
-* `JLS_ACCESS_CONFIG` : JSON file to configure [user restrictions](https://www.jetbrains.com/help/license_server/configuring_user_restrictions.html) (default `/data/access-config.json`)
-* `JLS_STATS_RECIPIENTS` : [Reports recipients](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) email addresses for stats (comma delimited)
-* `JLS_REPORT_OUT_OF_LICENSE` : [Warn about lack of licenses](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) every hour following the percentage threshold (default `0`)
-* `JLS_SMTP_SERVER` : SMTP server host to use for sending [stats](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html) (stats disabled if empty)
-* `JLS_SMTP_PORT` : SMTP server port (default `25`)
-* `JLS_SMTP_USERNAME` : SMTP username (auth disabled if empty)
-* `JLS_SMTP_PASSWORD` : SMTP password (auth disabled if empty)
-* `JLS_STATS_FROM` : [From address](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) for stats emails
-* `JLS_STATS_TOKEN` : Enables an auth token for the [stats API](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e312) at `/reportApi` (HTTP POST)
+* `TZ`: The timezone assigned to the container (default `UTC`)
+* `PUID`: Process UID (default `1000`)
+* `PGID`: Process GID (default `1000`)
+* `JLS_VIRTUAL_HOSTS`: [Virtual hosts](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) where license server will be available (comma delimited for several hosts)
+* `JLS_CONTEXT`:  [Context path](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) used by the license server (default `/`)
+* `JLS_ACCESS_CONFIG`: JSON file to configure [user restrictions](https://www.jetbrains.com/help/license_server/configuring_user_restrictions.html) (default `/data/access-config.json`)
+* `JLS_STATS_RECIPIENTS`: [Reports recipients](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) email addresses for stats (comma delimited)
+* `JLS_REPORT_OUT_OF_LICENSE`: [Warn about lack of licenses](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) every hour following the percentage threshold (default `0`)
+* `JLS_SMTP_SERVER`: SMTP server host to use for sending [stats](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html) (stats disabled if empty)
+* `JLS_SMTP_PORT`: SMTP server port (default `25`)
+* `JLS_SMTP_USERNAME`: SMTP username (auth disabled if empty)
+* `JLS_SMTP_PASSWORD`: SMTP password (auth disabled if empty)
+* `JLS_STATS_FROM`: [From address](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) for stats emails
+* `JLS_STATS_TOKEN`: Enables an auth token for the [stats API](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e312) at `/reportApi` (HTTP POST)
 
 ### Volumes
 
-* `/data` : Contains [registration data](https://www.jetbrains.com/help/license_server/migrate.html) and configuration
+* `/data`: Contains [registration data](https://www.jetbrains.com/help/license_server/migrate.html) and configuration
 
-> :warning: Note that the volume should be owned by uid `1000` and gid `1000`. If you don't give the volume correct permissions, the container may not start.
+> :warning: Note that the volumes should be owned by the user/group with the specified `PUID` and `PGID`. If you don't give the volume correct permissions, the container may not start.
 
 ### Ports
 
-* `8000` : Jetbrains License Server HTTP port
+* `8000`: Jetbrains License Server HTTP port
 
 ## Use this image
 
 ### Docker Compose
 
-Docker compose is the recommended way to run this image. Copy the content of folder [examples/compose](examples/compose) in `/var/jls/` on your host for example. Edit the compose and env files with your preferences and run the following commands :
+Docker compose is the recommended way to run this image. Copy the content of folder [examples/compose](examples/compose) in `/var/jls/` on your host for example. Edit the compose and env files with your preferences and run the following commands:
 
 ```bash
 touch acme.json
@@ -82,7 +84,7 @@ docker-compose logs -f
 
 ### Command line
 
-You can also use the following minimal command :
+You can also use the following minimal command:
 
 ```bash
 $ docker run -d -p 8000:8000 --name jetbrains_license_server \
@@ -94,7 +96,7 @@ $ docker run -d -p 8000:8000 --name jetbrains_license_server \
 
 ## Update
 
-Recreate the container whenever i push an update :
+Recreate the container whenever I push an update:
 
 ```bash
 docker-compose pull
