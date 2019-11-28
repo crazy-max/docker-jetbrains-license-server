@@ -5,7 +5,7 @@ JLS_LISTEN_ADDRESS="0.0.0.0"
 JLS_PORT=8000
 JLS_CONTEXT=${JLS_CONTEXT:-/}
 JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-/data/access-config.json}
-JLS_PROXY_TYPE=${JLS_PROXY_TYPE:-http}
+JLS_PROXY_TYPE=${JLS_PROXY_TYPE:-https}
 
 if [ -n "${PGID}" ] && [ "${PGID}" != "$(id -g jls)" ]; then
   echo "Switching to PGID ${PGID}..."
@@ -46,10 +46,10 @@ if [ ! -z "$JLS_PROXY_HOST" -a ! -z "$JLS_PROXY_PORT" ]; then
     su-exec jls:jls license-server configure \
       -J-D${JLS_PROXY_TYPE}.proxyUser=${JLS_PROXY_USER} \
       -J-D${JLS_PROXY_TYPE}.proxyPassword=${JLS_PROXY_PASSWORD}
-    unset JLS_PROXY_USER
-    unset JLS_PROXY_PASSWORD
   fi
 fi
+unset JLS_PROXY_USER
+unset JLS_PROXY_PASSWORD
 
 # https://www.jetbrains.com/help/license_server/configuring_user_restrictions.html
 if [ -s "$JLS_ACCESS_CONFIG" ]; then
@@ -68,6 +68,8 @@ if [ ! -z "$JLS_SMTP_SERVER" -a ! -z "$JLS_STATS_RECIPIENTS" ]; then
     su-exec jls:jls license-server configure --smtp.server.username ${JLS_SMTP_USERNAME}
     su-exec jls:jls license-server configure --smtp.server.password ${JLS_SMTP_PASSWORD}
   fi
+  unset JLS_SMTP_USERNAME
+  unset JLS_SMTP_PASSWORD
 
   if [ ! -z "$JLS_STATS_FROM" ]; then
     echo "Setting stats sender to $JLS_STATS_FROM..."

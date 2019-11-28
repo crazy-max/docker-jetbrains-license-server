@@ -1,5 +1,10 @@
 # Changelog
 
+## 21137-RC4 (2019/11/28)
+
+* Proxy type defaults to `https`
+* More unset
+
 ## 21137-RC3 (2019/11/28)
 
 * Add env vars to set proxy settings (#21)
