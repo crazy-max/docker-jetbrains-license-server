@@ -49,7 +49,7 @@ Image: crazymax/jetbrains-license-server:latest
 * `PGID`: Process GID (default `1000`)
 * `JLS_VIRTUAL_HOSTS`: [Virtual hosts](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) where license server will be available (comma delimited for several hosts)
 * `JLS_CONTEXT`:  [Context path](https://www.jetbrains.com/help/license_server/setting_host_and_port.html#d1010e63) used by the license server (default `/`)
-* `JLS_PROXY_TYPE`: Type of [proxy](https://www.jetbrains.com/help/license_server/configuring_proxy_settings.html) to use. Can be `http` or `https` (default `https`)
+* `JLS_PROXY_TYPE`: Type of [proxy](https://www.jetbrains.com/help/license_server/configuring_proxy_settings.html) to use. Can be `http` or `https` (default `http`)
 * `JLS_PROXY_HOST`: The host name of your proxy server
 * `JLS_PROXY_PORT`: The port number that the proxy server listens to
 * `JLS_PROXY_USER`: Username to connect to the proxy server (no auth if empty)
