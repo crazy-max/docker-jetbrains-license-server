@@ -1,5 +1,10 @@
 # Changelog
 
+## 21137-RC3 (2019/11/28)
+
+* Add env vars to set proxy settings (#21)
+* Unset sensitive vars
+
 ## 21137-RC2 (2019/11/17)
 
 * Allow to set custom `PUID`/`PGID`
