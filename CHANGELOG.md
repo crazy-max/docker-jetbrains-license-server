@@ -1,5 +1,9 @@
 # Changelog
 
+## 21137-RC5 (2019/12/07)
+
+* Fix timezone
+
 ## 21137-RC4 (2019/11/28)
 
 * Proxy type defaults to `https`

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+TZ=${TZ:-UTC}
+
 JLS_PATH="/opt/jetbrains-license-server"
 JLS_LISTEN_ADDRESS="0.0.0.0"
 JLS_PORT=8000
@@ -16,6 +18,11 @@ if [ -n "${PUID}" ] && [ "${PUID}" != "$(id -u jls)" ]; then
   echo "Switching to PUID ${PUID}..."
   sed -i -e "s/^jls:\([^:]*\):[0-9]*:\([0-9]*\)/jls:\1:${PUID}:\2/" /etc/passwd
 fi
+
+# Timezone
+echo "Setting timezone to ${TZ}..."
+ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime
+echo ${TZ} > /etc/timezone
 
 # Init
 echo "Initializing files and folders..."
