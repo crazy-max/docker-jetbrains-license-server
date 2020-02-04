@@ -1,5 +1,10 @@
 # Changelog
 
+## 22218-RC1 (2020/02/04)
+
+* JetBrains License Server 22218
+* AdoptOpenJDK JRE 13
+
 ## 21137-RC5 (2019/12/07)
 
 * Fix timezone

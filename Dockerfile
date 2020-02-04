@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:experimental
-FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:12-jre-hotspot as suexec
+FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:13-jre-hotspot as suexec
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -18,7 +18,7 @@ RUN  apt-get update \
   && chown root:root /usr/local/bin/su-exec \
   && chmod 0755 /usr/local/bin/su-exec
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:12-jre-hotspot
+FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:13-jre-hotspot
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -36,8 +36,8 @@ LABEL maintainer="CrazyMax" \
   org.label-schema.schema-version="1.0"
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
-  JLS_VERSION="21137" \
-  JLS_SHA256="05241f0d41644ecc7679a879c829e57d423e151b997b45c5e986d498d6fe2f21" \
+  JLS_VERSION="22218" \
+  JLS_SHA256="f68027a8b2b4f2d9b03fe0b0fef4a9ffc0fdfaf2657ab26d545777973311b601" \
   TZ="UTC" \
   PUID="1000" \
   PGID="1000"
