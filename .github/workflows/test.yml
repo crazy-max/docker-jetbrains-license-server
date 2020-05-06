@@ -29,13 +29,11 @@ jobs:
       -
         # https://github.com/actions/checkout
         name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       -
         # https://github.com/crazy-max/ghaction-docker-buildx
         name: Set up Docker Buildx
         uses: crazy-max/ghaction-docker-buildx@v1
-        with:
-          version: latest
       -
         name: Docker Buildx
         run: |
