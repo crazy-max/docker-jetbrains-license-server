@@ -29,11 +29,9 @@ jobs:
           echo ::set-output name=docker_username::crazymax
           echo ::set-output name=docker_image::crazymax/jetbrains-license-server
       -
-        # https://github.com/crazy-max/ghaction-docker-buildx
         name: Set up Docker Buildx
         uses: crazy-max/ghaction-docker-buildx@v1
       -
-        # https://github.com/actions/checkout
         name: Checkout
         uses: actions/checkout@v2
       -
