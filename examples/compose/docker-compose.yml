@@ -1,6 +1,15 @@
-version: "3.2"
+version: "3.5"
 
 services:
+  msmtpd:
+    image: crazymax/msmtpd:latest
+    container_name: flarum_msmtpd
+    env_file:
+      - "./msmtpd.env"
+    environment:
+      - "TZ"
+    restart: always
+
   jls:
     image: crazymax/jetbrains-license-server:latest
     container_name: jls
@@ -12,6 +21,12 @@ services:
       - "jls:/data"
     env_file:
       - "./jls.env"
+    environment:
+      - "TZ"
+      - "PUID"
+      - "PGID"
+      - "JLS_SMTP_SERVER=msmtpd"
+      - "JLS_SMTP_PORT=2500"
     restart: always
 
 volumes:

@@ -17,12 +17,30 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 💡 Want to be notified of new releases? Check out 🔔 [Diun (Docker Image Update Notifier)](https://github.com/crazy-max/diun) project!
 
+___
+
+* [Features](#features)
+* [Docker](#docker)
+  * [Multi-platform image](#multi-platform-image)
+  * [Environment variables](#environment-variables)
+  * [Volumes](#volumes)
+  * [Ports](#ports)
+* [Usage](#usage)
+  * [Docker Compose](#docker-compose)
+  * [Command line](#command-line)
+* [Upgrade](#upgrade)
+* [Notes](#notes)
+  * [Error 403 Passed value of header "Host" is not allowed](#error-403-passed-value-of-header-host-is-not-allowed)
+* [How can I help?](#how-can-i-help)
+* [License](#license)
+
 ## Features
 
 * Run as non-root user
 * Multi-platform image
 * License server completely customizable via environment variables
 * Registration data and configuration in a single directory
+* [msmtpd SMTP relay](https://github.com/crazy-max/docker-msmtpd) image to send emails
 * [Traefik](https://github.com/containous/traefik-library-image) as reverse proxy and creation/renewal of Let's Encrypt certificates (see [this template](examples/traefik))
 
 ## Docker
@@ -74,7 +92,7 @@ Image: crazymax/jetbrains-license-server:latest
 
 * `8000`: Jetbrains License Server HTTP port
 
-## Use this image
+## Usage
 
 ### Docker Compose
 
@@ -97,7 +115,7 @@ $ docker run -d -p 8000:8000 --name jetbrains_license_server \
   crazymax/jetbrains-license-server:latest
 ```
 
-## Update
+## Upgrade
 
 Recreate the container whenever I push an update:
 
@@ -106,7 +124,7 @@ docker-compose pull
 docker-compose up -d
 ```
 
-## Troubleshooting
+## Notes
 
 If you have any trouble using the license server, check the official [Troubleshooting page](https://www.jetbrains.com/help/license_server/troubleshooting.html) of Jetbrains.
 
@@ -120,7 +138,7 @@ Passed value of header "Host" is not allowed. Please contact your license server
 
 That's because the license server is running behind a reverse proxy. Please configure virtual hosts using the `JLS_VIRTUAL_HOSTS` variable.
 
-## How can I help ?
+## How can I help?
 
 All kinds of contributions are welcome :raised_hands:! The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon: You can also support this project by [**becoming a sponsor on GitHub**](https://github.com/sponsors/crazy-max) :clap: or by making a [Paypal donation](https://www.paypal.me/crazyws) to ensure this journey continues indefinitely! :rocket:
 
