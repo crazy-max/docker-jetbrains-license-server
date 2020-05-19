@@ -13,6 +13,8 @@ services:
   jls:
     image: crazymax/jetbrains-license-server:latest
     container_name: jls
+    depends_on:
+      - msmtpd
     ports:
       - target: 8000
         published: 8000

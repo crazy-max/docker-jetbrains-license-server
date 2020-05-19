@@ -44,6 +44,8 @@ services:
   jls:
     image: crazymax/jetbrains-license-server:latest
     container_name: jls
+    depends_on:
+      - msmtpd
     volumes:
       - "jls:/data"
     labels:
