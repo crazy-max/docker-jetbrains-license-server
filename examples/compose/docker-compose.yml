@@ -3,7 +3,7 @@ version: "3.5"
 services:
   msmtpd:
     image: crazymax/msmtpd:latest
-    container_name: flarum_msmtpd
+    container_name: jls_msmtpd
     env_file:
       - "./msmtpd.env"
     environment:
