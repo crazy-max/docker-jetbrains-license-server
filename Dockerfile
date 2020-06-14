@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:experimental
 FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:13-jre-hotspot as suexec
 
 ARG BUILD_DATE
