@@ -48,7 +48,7 @@ jobs:
             ${TAGS} --file Dockerfile .
       -
         name: Set up Docker Buildx
-        uses: crazy-max/ghaction-docker-buildx@v2
+        uses: crazy-max/ghaction-docker-buildx@v3.1.0
       -
         name: Checkout
         uses: actions/checkout@v2
