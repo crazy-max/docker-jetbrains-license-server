@@ -3,15 +3,14 @@ name: build
 on:
   push:
     branches:
-      - '**'
-      - '!dependabot/**'
+      - 'master'
     tags:
       - '*'
     paths-ignore:
       - '**.md'
   pull_request:
     branches:
-      - '**'
+      - 'master'
     paths-ignore:
       - '**.md'
 
