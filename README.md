@@ -1,4 +1,4 @@
-<p align="center"><a href="https://github.com/crazy-max/docker-jetbrains-license-server" target="_blank"><img height="128" src="https://raw.githubusercontent.com/crazy-max/docker-jetbrains-license-server/master/.res/docker-jetbrains-license-server.jpg"></a></p>
+<p align="center"><a href="https://github.com/crazy-max/docker-jetbrains-license-server" target="_blank"><img height="128" src="https://raw.githubusercontent.com/crazy-max/docker-jetbrains-license-server/master/.github/docker-jetbrains-license-server.jpg"></a></p>
 
 <p align="center">
   <a href="https://hub.docker.com/r/crazymax/jetbrains-license-server/tags?page=1&ordering=last_updated"><img src="https://img.shields.io/github/v/tag/crazy-max/docker-jetbrains-license-server?label=version&style=flat-square" alt="Latest Version"></a>

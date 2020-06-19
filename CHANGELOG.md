@@ -1,5 +1,9 @@
 # Changelog
 
+## 23527-RC1 (2020/06/19)
+
+* JetBrains License Server 23527
+
 ## 22218-RC1 (2020/02/04)
 
 * JetBrains License Server 22218
