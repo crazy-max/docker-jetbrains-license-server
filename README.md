@@ -81,6 +81,9 @@ Image: crazymax/jetbrains-license-server:latest
 * `JLS_SMTP_PASSWORD`: SMTP password (auth disabled if empty)
 * `JLS_STATS_FROM`: [From address](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e40) for stats emails
 * `JLS_STATS_TOKEN`: Enables an auth token for the [stats API](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#d461e312) at `/reportApi` (HTTP POST)
+* `JLS_SERVICE_LOGLEVEL`: Logging of IDE requests and responses (default `warn`)
+* `JLS_REPORTING_LOGLEVEL`: Logging of actions on a server: tickets obtaining and revoking with user and license information (default `warn`) 
+* `JLS_TICKETS_LOGLEVEL`: Logging of actions with tickets. For example, manual ticket revoking (default `warn`)
 
 ### Volumes
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 24694-RC1 (2020/10/08)
+
+* JetBrains License Server 24694
+* Add `JLS_SERVICE_LOGLEVEL`, `JLS_REPORTING_LOGLEVEL` and `JLS_TICKETS_LOGLEVEL` env vars
+
 ## 24086-RC1 (2020/08/17)
 
 * JetBrains License Server 24086

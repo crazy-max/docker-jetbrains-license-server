@@ -8,6 +8,9 @@ JLS_PORT=8000
 JLS_CONTEXT=${JLS_CONTEXT:-/}
 JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-/data/access-config.json}
 JLS_PROXY_TYPE=${JLS_PROXY_TYPE:-https}
+JLS_SERVICE_LOGLEVEL=${JLS_SERVICE_LOGLEVEL:-warn}
+JLS_REPORTING_LOGLEVEL=${JLS_REPORTING_LOGLEVEL:-warn}
+JLS_TICKETS_LOGLEVEL=${JLS_TICKETS_LOGLEVEL:-warn}
 
 if [ -n "${PGID}" ] && [ "${PGID}" != "$(id -g jls)" ]; then
   echo "Switching to PGID ${PGID}..."
@@ -98,6 +101,35 @@ if [ ! -z "$JLS_STATS_TOKEN" ]; then
   su-exec jls:jls license-server configure --reporting.token ${JLS_STATS_TOKEN}
 fi
 unset JLS_STATS_TOKEN
+
+# https://www.jetbrains.com/help/license_server/changing_logging_level.html
+cat > ${JLS_PATH}/web/WEB-INF/classes/log4j2.xml <<EOL
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="60">
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p %c{1}:%L - %m%n"/>
+        </Console>
+        <Async name="ASYNC" includeLocation="true">
+            <AppenderRef ref="CONSOLE"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="ASYNC"/>
+        </Root>
+        <Logger name="l_service" level="${JLS_SERVICE_LOGLEVEL}" additivity="false">
+            <AppenderRef ref="ASYNC"/>
+        </Logger>
+        <Logger name="Reporting" level="${JLS_REPORTING_LOGLEVEL}" additivity="false">
+            <AppenderRef ref="ASYNC"/>
+        </Logger>
+        <Logger name="Tickets" level="${JLS_TICKETS_LOGLEVEL}" additivity="false">
+            <AppenderRef ref="ASYNC"/>
+        </Logger>
+    </Loggers>
+</Configuration>
+EOL
 
 echo "Fixing perms..."
 chown -R jls:jls /data "$JLS_PATH"
