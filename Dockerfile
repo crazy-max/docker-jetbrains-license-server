@@ -35,8 +35,8 @@ LABEL maintainer="CrazyMax" \
   org.opencontainers.image.licenses="MIT"
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
-  JLS_VERSION="24086" \
-  JLS_SHA256="6fe98ea98b710167188bec2c104530dc4fcdf2ea2af25391b214871a11b50f66" \
+  JLS_VERSION="24694" \
+  JLS_SHA256="488e0ee409631e177bdc29c32fd2cba94d080e0d5249ac48f95fb7b925d24719" \
   TZ="UTC" \
   PUID="1000" \
   PGID="1000"
