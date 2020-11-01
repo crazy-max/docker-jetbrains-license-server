@@ -20,7 +20,7 @@ ___
 
 * [Features](#features)
 * [Docker](#docker)
-  * [Multi-platform image](#multi-platform-image)
+  * [Image](#image)
   * [Environment variables](#environment-variables)
   * [Volumes](#volumes)
   * [Ports](#ports)
@@ -44,7 +44,12 @@ ___
 
 ## Docker
 
-### Multi-platform image
+### Image
+
+| Registry                                                                                         | Image                           |
+|--------------------------------------------------------------------------------------------------|---------------------------------|
+| [Docker Hub](https://hub.docker.com/r/crazymax/jetbrains-license-server/)                                            | `crazymax/jetbrains-license-server`                 |
+| [GitHub Container Registry](https://github.com/users/crazy-max/packages/container/package/jetbrains-license-server)  | `ghcr.io/crazy-max/jetbrains-license-server`        |
 
 Following platforms for this image are available:
 
