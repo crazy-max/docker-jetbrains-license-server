@@ -19,11 +19,11 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 ___
 
 * [Features](#features)
-* [Docker](#docker)
-  * [Image](#image)
-  * [Environment variables](#environment-variables)
-  * [Volumes](#volumes)
-  * [Ports](#ports)
+* [Build locally](#build-locally)
+* [Image](#image)
+* [Environment variables](#environment-variables)
+* [Volumes](#volumes)
+* [Ports](#ports)
 * [Usage](#usage)
   * [Docker Compose](#docker-compose)
   * [Command line](#command-line)
@@ -42,9 +42,20 @@ ___
 * [msmtpd SMTP relay](https://github.com/crazy-max/docker-msmtpd) image to send emails
 * [Traefik](https://github.com/containous/traefik-library-image) as reverse proxy and creation/renewal of Let's Encrypt certificates (see [this template](examples/traefik))
 
-## Docker
+## Build locally
 
-### Image
+```shell
+git clone https://github.com/crazy-max/docker-jetbrains-license-server.git
+cd docker-jetbrains-license-server
+
+# Build image and output to docker (default)
+docker buildx bake
+
+# Build multi-platform image
+docker buildx bake image-all
+```
+
+## Image
 
 | Registry                                                                                         | Image                           |
 |--------------------------------------------------------------------------------------------------|---------------------------------|
@@ -64,7 +75,7 @@ Image: crazymax/jetbrains-license-server:latest
    - linux/s390x
 ```
 
-### Environment variables
+## Environment variables
 
 * `TZ`: The timezone assigned to the container (default `UTC`)
 * `PUID`: JLS UID (default `1000`)
@@ -89,13 +100,13 @@ Image: crazymax/jetbrains-license-server:latest
 * `JLS_REPORTING_LOGLEVEL`: Logging of actions on a server: tickets obtaining and revoking with user and license information (default `warn`) 
 * `JLS_TICKETS_LOGLEVEL`: Logging of actions with tickets. For example, manual ticket revoking (default `warn`)
 
-### Volumes
+## Volumes
 
 * `/data`: Contains [registration data](https://www.jetbrains.com/help/license_server/migrate.html) and configuration
 
 > :warning: Note that the volumes should be owned by the user/group with the specified `PUID` and `PGID`. If you don't give the volume correct permissions, the container may not start.
 
-### Ports
+## Ports
 
 * `8000`: Jetbrains License Server HTTP port
 

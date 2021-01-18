@@ -34,16 +34,18 @@ jobs:
             ${{ env.DOCKERHUB_SLUG }}
             ${{ env.GHCR_SLUG }}
           tag-edge: true
-          tag-match: (.*)-RC
+          tag-match: (.*)-r
           tag-match-group: 1
+          label-custom: |
+            org.opencontainers.image.title=JetBrains License Server
+            org.opencontainers.image.description=JetBrains License Server
+            org.opencontainers.image.vendor=CrazyMax
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-        with:
-          buildkitd-flags: "--debug"
       -
         name: Login to DockerHub
         if: github.event_name != 'pull_request'
@@ -61,18 +63,13 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
       -
         name: Build
-        uses: docker/build-push-action@v2
+        uses: crazy-max/ghaction-docker-buildx-bake@v1
         with:
-          context: .
-          file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.docker_meta.outputs.bake-file }}
+          targets: image-all
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          labels: |
-            ${{ steps.docker_meta.outputs.labels }}
-            org.opencontainers.image.title=JetBrains License Server
-            org.opencontainers.image.description=JetBrains License Server
-            org.opencontainers.image.vendor=CrazyMax
       -
         name: Check manifest
         if: github.event_name != 'pull_request'
