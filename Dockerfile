@@ -1,4 +1,4 @@
-FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:13-jre-hotspot as suexec
+FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:15-jre-hotspot as suexec
 
 RUN  apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -10,13 +10,13 @@ RUN  apt-get update \
   && chmod 0755 /usr/local/bin/su-exec
 
 ARG TARGETPLATFORM
-FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:13-jre-hotspot
+FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:15-jre-hotspot
 
 LABEL maintainer="CrazyMax"
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
-  JLS_VERSION="24694" \
-  JLS_SHA256="488e0ee409631e177bdc29c32fd2cba94d080e0d5249ac48f95fb7b925d24719" \
+  JLS_VERSION="25980" \
+  JLS_SHA256="6c0ddea8f88950f2999e5dc12a1845d440cd73bad0e0cc51240c16e2ef34abf5" \
   TZ="UTC" \
   PUID="1000" \
   PGID="1000"

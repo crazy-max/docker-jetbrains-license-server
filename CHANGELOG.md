@@ -1,5 +1,11 @@
 # Changelog
 
+## 25980-r0 (2021/01/18)
+
+* JetBrains License Server 25980
+* OpenJDK JRE 15
+* Switch to buildx bake
+
 ## 24694-RC1 (2020/10/08)
 
 * JetBrains License Server 24694
