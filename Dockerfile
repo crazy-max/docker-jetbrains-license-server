@@ -15,8 +15,8 @@ FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:15-jre-hotspot
 LABEL maintainer="CrazyMax"
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
-  JLS_VERSION="25980" \
-  JLS_SHA256="6c0ddea8f88950f2999e5dc12a1845d440cd73bad0e0cc51240c16e2ef34abf5" \
+  JLS_VERSION="26301" \
+  JLS_SHA256="982c185aac91035463d89831ef82ba7fda400fe603d5598584b77986c459a66b" \
   TZ="UTC" \
   PUID="1000" \
   PGID="1000"

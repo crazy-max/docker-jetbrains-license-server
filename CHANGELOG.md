@@ -1,5 +1,9 @@
 # Changelog
 
+## 26301-r0 (2021/02/11)
+
+* JetBrains License Server 26301
+
 ## 25980-r0 (2021/01/18)
 
 * JetBrains License Server 25980
