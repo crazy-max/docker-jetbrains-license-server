@@ -43,10 +43,6 @@
   name: ":pray: help wanted"
   color: "4caf50"
   description: ""
-- # hold
-  name: ":hand: hold"
-  color: "24292f"
-  description: ""
 - # invalid
   name: ":no_entry_sign: invalid"
   color: "e6e6e6"
