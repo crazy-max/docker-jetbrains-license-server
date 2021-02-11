@@ -35,7 +35,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
       -
         name: Build
-        uses: crazy-max/ghaction-docker-buildx-bake@v1
+        uses: docker/bake-action@v1
         with:
           targets: image-local
         env:
