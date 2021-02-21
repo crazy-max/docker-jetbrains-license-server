@@ -21,6 +21,9 @@ if [ -n "${PUID}" ] && [ "${PUID}" != "$(id -u jls)" ]; then
   echo "Switching to PUID ${PUID}..."
   sed -i -e "s/^jls:\([^:]*\):[0-9]*:\([0-9]*\)/jls:\1:${PUID}:\2/" /etc/passwd
 fi
+if [ -n "${PUID}" ] || [ -n "${PGID}" ]; then
+  chown -R jls:jls /data "$JLS_PATH"
+fi
 
 # Timezone
 echo "Setting timezone to ${TZ}..."
@@ -36,7 +39,7 @@ echo "Configuring Jetbrains License Server..."
 su-exec jls:jls license-server configure --listen ${JLS_LISTEN_ADDRESS} --port ${JLS_PORT} --context ${JLS_CONTEXT}
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
-if [ ! -z "$JLS_VIRTUAL_HOSTS" ]; then
+if [ -n "$JLS_VIRTUAL_HOSTS" ]; then
   echo "Following virtual hosts will be used:"
   for JLS_VIRTUAL_HOST in $(echo ${JLS_VIRTUAL_HOSTS} | tr "," "\n"); do
     echo "-> ${JLS_VIRTUAL_HOST}"
@@ -45,13 +48,13 @@ if [ ! -z "$JLS_VIRTUAL_HOSTS" ]; then
 fi
 
 # https://www.jetbrains.com/help/license_server/configuring_proxy_settings.html
-if [ ! -z "$JLS_PROXY_HOST" -a ! -z "$JLS_PROXY_PORT" ]; then
+if [ -n "$JLS_PROXY_HOST" ] && [ -n "$JLS_PROXY_PORT" ]; then
   echo "Setting ${JLS_PROXY_TYPE} proxy to $JLS_PROXY_HOST:$JLS_PROXY_PORT..."
   su-exec jls:jls license-server configure \
     -J-D${JLS_PROXY_TYPE}.proxyHost=${JLS_PROXY_HOST} \
     -J-D${JLS_PROXY_TYPE}.proxyPort=${JLS_PROXY_PORT}
 
-  if [ ! -z "$JLS_PROXY_USER" -a ! -z "$JLS_PROXY_PASSWORD" ]; then
+  if [ -n "$JLS_PROXY_USER" ] && [ -n "$JLS_PROXY_PASSWORD" ]; then
     echo "Setting ${JLS_PROXY_TYPE} proxy credentials..."
     su-exec jls:jls license-server configure \
       -J-D${JLS_PROXY_TYPE}.proxyUser=${JLS_PROXY_USER} \
@@ -68,12 +71,12 @@ if [ -s "$JLS_ACCESS_CONFIG" ]; then
 fi
 
 # https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html
-if [ ! -z "$JLS_SMTP_SERVER" -a ! -z "$JLS_STATS_RECIPIENTS" ]; then
+if [ -n "$JLS_SMTP_SERVER" ] && [ -n "$JLS_STATS_RECIPIENTS" ]; then
   JLS_SMTP_PORT=${JLS_SMTP_PORT:-25}
   echo "Enabling User Reporting via SMTP at $JLS_SMTP_SERVER:$JLS_SMTP_PORT..."
   su-exec jls:jls license-server configure --smtp.server ${JLS_SMTP_SERVER} --smtp.server.port ${JLS_SMTP_PORT}
 
-  if [ ! -z "$JLS_SMTP_USERNAME" -a ! -z "$JLS_SMTP_PASSWORD" ]; then
+  if [ -n "$JLS_SMTP_USERNAME" ] && [ -n "$JLS_SMTP_PASSWORD" ]; then
     echo "Using SMTP username $JLS_SMTP_USERNAME with password..."
     su-exec jls:jls license-server configure --smtp.server.username ${JLS_SMTP_USERNAME}
     su-exec jls:jls license-server configure --smtp.server.password ${JLS_SMTP_PASSWORD}
@@ -81,7 +84,7 @@ if [ ! -z "$JLS_SMTP_SERVER" -a ! -z "$JLS_STATS_RECIPIENTS" ]; then
   unset JLS_SMTP_USERNAME
   unset JLS_SMTP_PASSWORD
 
-  if [ ! -z "$JLS_STATS_FROM" ]; then
+  if [ -n "$JLS_STATS_FROM" ]; then
     echo "Setting stats sender to $JLS_STATS_FROM..."
     su-exec jls:jls license-server configure --stats.from ${JLS_STATS_FROM}
   fi
@@ -96,7 +99,7 @@ if [ ! -z "$JLS_SMTP_SERVER" -a ! -z "$JLS_STATS_RECIPIENTS" ]; then
 fi
 
 # https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html
-if [ ! -z "$JLS_STATS_TOKEN" ]; then
+if [ -n "$JLS_STATS_TOKEN" ]; then
   echo "Enabling stats via API at /$JLS_STATS_TOKEN..."
   su-exec jls:jls license-server configure --reporting.token ${JLS_STATS_TOKEN}
 fi

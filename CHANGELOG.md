@@ -1,5 +1,9 @@
 # Changelog
 
+## 26301-r1 (2021/02/21)
+
+* Fix permissions (#44)
+
 ## 26301-r0 (2021/02/11)
 
 * JetBrains License Server 26301
