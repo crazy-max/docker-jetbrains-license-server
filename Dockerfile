@@ -1,26 +1,16 @@
-FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:15-jre-hotspot as suexec
+ARG JLS_VERSION=26301
+ARG JLS_SHA256=982c185aac91035463d89831ef82ba7fda400fe603d5598584b77986c459a66b
 
-RUN  apt-get update \
-  && apt-get install -y --no-install-recommends \
-    gcc \
-    libc-dev \
-  && curl -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c \
-  && gcc -Wall /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec \
-  && chown root:root /usr/local/bin/su-exec \
-  && chmod 0755 /usr/local/bin/su-exec
-
-ARG TARGETPLATFORM
+FROM --platform=${TARGETPLATFORM:-linux/amd64} crazymax/gosu:latest AS gosu
 FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:15-jre-hotspot
-
 LABEL maintainer="CrazyMax"
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
-  JLS_VERSION="26301" \
-  JLS_SHA256="982c185aac91035463d89831ef82ba7fda400fe603d5598584b77986c459a66b" \
   TZ="UTC" \
   PUID="1000" \
   PGID="1000"
 
+ARG JLS_SHA256
 RUN apt-get update \
   && apt-get install -y \
     bash \
@@ -40,9 +30,8 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY --from=suexec /usr/local/bin/su-exec /usr/local/bin/su-exec
+COPY --from=gosu / /
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod a+x /entrypoint.sh
 
 EXPOSE 8000
 WORKDIR /data

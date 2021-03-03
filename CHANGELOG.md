@@ -1,5 +1,9 @@
 # Changelog
 
+## 26301-r2 (2021/03/03)
+
+* Switch to `gosu`
+
 ## 26301-r1 (2021/02/21)
 
 * Fix permissions (#44)

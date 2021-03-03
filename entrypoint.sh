@@ -32,11 +32,11 @@ echo ${TZ} > /etc/timezone
 
 # Init
 echo "Initializing files and folders..."
-su-exec jls:jls touch "/data/access-config.json"
+gosu jls:jls touch "/data/access-config.json"
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 echo "Configuring Jetbrains License Server..."
-su-exec jls:jls license-server configure --listen ${JLS_LISTEN_ADDRESS} --port ${JLS_PORT} --context ${JLS_CONTEXT}
+gosu jls:jls license-server configure --listen ${JLS_LISTEN_ADDRESS} --port ${JLS_PORT} --context ${JLS_CONTEXT}
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 if [ -n "$JLS_VIRTUAL_HOSTS" ]; then
@@ -44,19 +44,19 @@ if [ -n "$JLS_VIRTUAL_HOSTS" ]; then
   for JLS_VIRTUAL_HOST in $(echo ${JLS_VIRTUAL_HOSTS} | tr "," "\n"); do
     echo "-> ${JLS_VIRTUAL_HOST}"
   done
-  su-exec jls:jls license-server configure --jetty.virtualHosts.names=${JLS_VIRTUAL_HOSTS}
+  gosu jls:jls license-server configure --jetty.virtualHosts.names=${JLS_VIRTUAL_HOSTS}
 fi
 
 # https://www.jetbrains.com/help/license_server/configuring_proxy_settings.html
 if [ -n "$JLS_PROXY_HOST" ] && [ -n "$JLS_PROXY_PORT" ]; then
   echo "Setting ${JLS_PROXY_TYPE} proxy to $JLS_PROXY_HOST:$JLS_PROXY_PORT..."
-  su-exec jls:jls license-server configure \
+  gosu jls:jls license-server configure \
     -J-D${JLS_PROXY_TYPE}.proxyHost=${JLS_PROXY_HOST} \
     -J-D${JLS_PROXY_TYPE}.proxyPort=${JLS_PROXY_PORT}
 
   if [ -n "$JLS_PROXY_USER" ] && [ -n "$JLS_PROXY_PASSWORD" ]; then
     echo "Setting ${JLS_PROXY_TYPE} proxy credentials..."
-    su-exec jls:jls license-server configure \
+    gosu jls:jls license-server configure \
       -J-D${JLS_PROXY_TYPE}.proxyUser=${JLS_PROXY_USER} \
       -J-D${JLS_PROXY_TYPE}.proxyPassword=${JLS_PROXY_PASSWORD}
   fi
@@ -67,41 +67,41 @@ unset JLS_PROXY_PASSWORD
 # https://www.jetbrains.com/help/license_server/configuring_user_restrictions.html
 if [ -s "$JLS_ACCESS_CONFIG" ]; then
   echo "Enabling user restrictions access from $JLS_ACCESS_CONFIG..."
-  su-exec jls:jls license-server configure --access.config=file:${JLS_ACCESS_CONFIG}
+  gosu jls:jls license-server configure --access.config=file:${JLS_ACCESS_CONFIG}
 fi
 
 # https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html
 if [ -n "$JLS_SMTP_SERVER" ] && [ -n "$JLS_STATS_RECIPIENTS" ]; then
   JLS_SMTP_PORT=${JLS_SMTP_PORT:-25}
   echo "Enabling User Reporting via SMTP at $JLS_SMTP_SERVER:$JLS_SMTP_PORT..."
-  su-exec jls:jls license-server configure --smtp.server ${JLS_SMTP_SERVER} --smtp.server.port ${JLS_SMTP_PORT}
+  gosu jls:jls license-server configure --smtp.server ${JLS_SMTP_SERVER} --smtp.server.port ${JLS_SMTP_PORT}
 
   if [ -n "$JLS_SMTP_USERNAME" ] && [ -n "$JLS_SMTP_PASSWORD" ]; then
     echo "Using SMTP username $JLS_SMTP_USERNAME with password..."
-    su-exec jls:jls license-server configure --smtp.server.username ${JLS_SMTP_USERNAME}
-    su-exec jls:jls license-server configure --smtp.server.password ${JLS_SMTP_PASSWORD}
+    gosu jls:jls license-server configure --smtp.server.username ${JLS_SMTP_USERNAME}
+    gosu jls:jls license-server configure --smtp.server.password ${JLS_SMTP_PASSWORD}
   fi
   unset JLS_SMTP_USERNAME
   unset JLS_SMTP_PASSWORD
 
   if [ -n "$JLS_STATS_FROM" ]; then
     echo "Setting stats sender to $JLS_STATS_FROM..."
-    su-exec jls:jls license-server configure --stats.from ${JLS_STATS_FROM}
+    gosu jls:jls license-server configure --stats.from ${JLS_STATS_FROM}
   fi
 
   if [ "$JLS_REPORT_OUT_OF_LICENSE" -gt 0 ]; then
     echo "Setting report out of licence to $JLS_REPORT_OUT_OF_LICENSE%..."
-    su-exec jls:jls license-server configure --reporting.out.of.license.threshold ${JLS_REPORT_OUT_OF_LICENSE}
+    gosu jls:jls license-server configure --reporting.out.of.license.threshold ${JLS_REPORT_OUT_OF_LICENSE}
   fi
 
   echo "Stats recipients: $JLS_STATS_RECIPIENTS..."
-  su-exec jls:jls license-server configure --stats.recipients ${JLS_STATS_RECIPIENTS}
+  gosu jls:jls license-server configure --stats.recipients ${JLS_STATS_RECIPIENTS}
 fi
 
 # https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html
 if [ -n "$JLS_STATS_TOKEN" ]; then
   echo "Enabling stats via API at /$JLS_STATS_TOKEN..."
-  su-exec jls:jls license-server configure --reporting.token ${JLS_STATS_TOKEN}
+  gosu jls:jls license-server configure --reporting.token ${JLS_STATS_TOKEN}
 fi
 unset JLS_STATS_TOKEN
 
@@ -137,4 +137,4 @@ EOL
 echo "Fixing perms..."
 chown -R jls:jls /data "$JLS_PATH"
 
-exec su-exec jls:jls "$@"
+exec gosu jls:jls "$@"
