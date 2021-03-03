@@ -1,8 +1,8 @@
 ARG JLS_VERSION=26301
 ARG JLS_SHA256=982c185aac91035463d89831ef82ba7fda400fe603d5598584b77986c459a66b
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} crazymax/gosu:latest AS gosu
-FROM --platform=${TARGETPLATFORM:-linux/amd64} adoptopenjdk:15-jre-hotspot
+FROM crazymax/gosu:latest AS gosu
+FROM adoptopenjdk:15-jre-hotspot
 LABEL maintainer="CrazyMax"
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
