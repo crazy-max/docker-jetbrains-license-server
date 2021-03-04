@@ -1,7 +1,7 @@
 ARG JLS_VERSION=26301
 ARG JLS_SHA256=982c185aac91035463d89831ef82ba7fda400fe603d5598584b77986c459a66b
 
-FROM crazymax/gosu:latest AS gosu
+FROM crazymax/yasu:latest AS yasu
 FROM adoptopenjdk:15-jre-hotspot
 LABEL maintainer="CrazyMax"
 
@@ -30,7 +30,7 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY --from=gosu / /
+COPY --from=yasu / /
 COPY entrypoint.sh /entrypoint.sh
 
 EXPOSE 8000
