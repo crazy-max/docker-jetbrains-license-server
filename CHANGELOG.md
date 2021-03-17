@@ -1,5 +1,9 @@
 # Changelog
 
+## 26498-r0 (2021/03/17)
+
+* JetBrains License Server 26498
+
 ## 26301-r3 (2021/03/04)
 
 * Renamed `yasu` (more info https://github.com/crazy-max/yasu#yet-another)
