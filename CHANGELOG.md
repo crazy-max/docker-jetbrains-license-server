@@ -1,5 +1,9 @@
 # Changelog
 
+## 27608-r0 (2021/06/29)
+
+* JetBrains License Server 27608
+
 ## 26498-r0 (2021/03/17)
 
 * JetBrains License Server 26498
