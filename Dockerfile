@@ -1,9 +1,8 @@
-ARG JLS_VERSION=27608
-ARG JLS_SHA256=20f237eb4e87de82aeabaf065e0fd0df72c6a65fb86d3b797822cb9b6ef740f3
+ARG JLS_VERSION=28150
+ARG JLS_SHA256=7fa1035498ade9f4cd060763d7bff64baae66b601189014d963295a96e000089
 
 FROM crazymax/yasu:latest AS yasu
 FROM adoptopenjdk:15-jre-hotspot
-LABEL maintainer="CrazyMax"
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
   TZ="UTC" \
