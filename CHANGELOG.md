@@ -1,5 +1,9 @@
 # Changelog
 
+## 28662-r0 (2021/08/15)
+
+* JetBrains License Server 28662
+
 ## 28150-r0 (2021/07/14)
 
 * JetBrains License Server 28150
