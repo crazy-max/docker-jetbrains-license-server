@@ -11,7 +11,7 @@
 
 ## About
 
-[JetBrains License Server](https://www.jetbrains.com/help/license_server/getting_started.html) Docker image based on AdoptOpenJDK.<br />
+[JetBrains License Server](https://www.jetbrains.com/help/license_server/getting_started.html) Docker image based on Alpine Linux.<br />
 If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other Docker images!
 
 💡 Want to be notified of new releases? Check out 🔔 [Diun (Docker Image Update Notifier)](https://github.com/crazy-max/diun) project!
@@ -70,6 +70,8 @@ Image: crazymax/jetbrains-license-server:latest
  * Manifest List: Yes
  * Supported platforms:
    - linux/amd64
+   - linux/arm/v6
+   - linux/arm/v7
    - linux/arm64
    - linux/ppc64le
    - linux/s390x
