@@ -1,5 +1,10 @@
 # Changelog
 
+## 28662-r1 (2021/09/18)
+
+* Alpine Linux 3.14 (#55)
+* Fix JRE (#54)
+
 ## 28662-r0 (2021/08/15)
 
 * JetBrains License Server 28662
