@@ -2,7 +2,7 @@ ARG JLS_VERSION=28662
 ARG JLS_SHA256=6b3ce4bfc043985276bf6094ca5ed6aef1a1f305f6903725074f36634f3880ba
 
 FROM crazymax/yasu:latest AS yasu
-FROM adoptopenjdk:8-jre-hotspot
+FROM alpine:3.14
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
   TZ="UTC" \
@@ -10,10 +10,13 @@ ENV JLS_PATH="/opt/jetbrains-license-server" \
   PGID="1000"
 
 ARG JLS_SHA256
-RUN apt-get update \
-  && apt-get install -y \
+RUN apk add --update --no-cache \
     bash \
+    ca-certificates \
     curl \
+    openjdk8-jre \
+    openssl \
+    shadow \
     zip \
     tzdata \
   && mkdir -p /data "$JLS_PATH" \
@@ -23,11 +26,10 @@ RUN apt-get update \
   && rm -f "/tmp/jls.zip" \
   && chmod a+x "$JLS_PATH/bin/license-server.sh" \
   && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
-  && groupadd -f -g ${PGID} jls \
-  && useradd -o -s /bin/bash -d /data -u ${PUID} -g jls -m jls \
+  && addgroup -g ${PGID} jls \
+  && adduser -u ${PUID} -G jls -h /data -s /bin/bash -D jls \
   && chown -R jls. /data "$JLS_PATH" \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && rm -rf /tmp/* /var/cache/apk/*
 
 COPY --from=yasu / /
 COPY entrypoint.sh /entrypoint.sh
