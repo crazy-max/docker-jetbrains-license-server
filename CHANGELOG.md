@@ -1,5 +1,9 @@
 # Changelog
 
+## 29591-r0 (2021/10/26)
+
+* JetBrains License Server 29591 (#56)
+
 ## 28662-r1 (2021/09/18)
 
 * Alpine Linux 3.14 (#55)
