@@ -1,5 +1,5 @@
-ARG JLS_VERSION=29591
-ARG JLS_SHA256=c361ab16bf25a4d2e14dd32fec20ecfc5b845716badf861e404edbd1ec2a5712
+ARG JLS_VERSION=30211
+ARG JLS_SHA256=9e3e1959fb1823346defe2f0622004268a91f5377587e993a47cb71ef2890a22
 
 FROM crazymax/yasu:latest AS yasu
 FROM alpine:3.14
@@ -29,7 +29,7 @@ RUN apk add --update --no-cache \
   && addgroup -g ${PGID} jls \
   && adduser -u ${PUID} -G jls -h /data -s /bin/bash -D jls \
   && chown -R jls. /data "$JLS_PATH" \
-  && rm -rf /tmp/* /var/cache/apk/*
+  && rm -rf /tmp/*
 
 COPY --from=yasu / /
 COPY entrypoint.sh /entrypoint.sh
