@@ -1,5 +1,9 @@
 # Changelog
 
+## 30333-r0 (2021/12/22)
+
+* JetBrains License Server 30333 (#60)
+
 ## 30241-r0 (2021/12/17)
 
 * JetBrains License Server 30241 (#59)
