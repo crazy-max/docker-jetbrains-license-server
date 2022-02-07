@@ -1,5 +1,5 @@
-ARG JLS_VERSION=30333
-ARG JLS_SHA256=2bb37709c174cb1005515a356644e2250bd326d4b2777409ac3b39802a56334e
+ARG JLS_VERSION=30803
+ARG JLS_SHA256=a9a2b6163354382162e4e9802ca88a651ca2421a2f495a558babafe5f02f063a
 
 FROM crazymax/yasu:latest AS yasu
 FROM alpine:3.15
@@ -14,7 +14,7 @@ RUN apk add --update --no-cache \
     bash \
     ca-certificates \
     curl \
-    openjdk8-jre \
+    openjdk11-jre \
     openssl \
     shadow \
     zip \
