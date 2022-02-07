@@ -1,5 +1,10 @@
 # Changelog
 
+## 30803-r0 (2022/02/07)
+
+* JetBrains License Server 30803 (#61)
+* OpenJDK 11 required (drops support for `arm/v6` and `arm/v7`)
+
 ## 30333-r0 (2021/12/22)
 
 * JetBrains License Server 30333 (#60)
