@@ -1,5 +1,9 @@
 # Changelog
 
+## 31550-r0 (2022/04/10)
+
+* JetBrains License Server 31550 (#64)
+
 ## 30803-r0 (2022/02/07)
 
 * JetBrains License Server 30803 (#61)
