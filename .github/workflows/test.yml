@@ -29,13 +29,13 @@ jobs:
           echo ::set-output name=running_log_check::is listening on
       -
         name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
       -
         name: Build
-        uses: docker/bake-action@v1
+        uses: docker/bake-action@v2
         with:
           targets: image-local
         env:
