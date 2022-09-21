@@ -1,10 +1,11 @@
 #!/bin/sh
 
 # SSH server inside the container
-service ssh start
+#service ssh start
 
 # Nginx for fixing HTTP headers modified by Azure's App Service proxy
-service nginx start
+#service nginx start
+rc-service nginx start
 
 TZ=${TZ:-UTC}
 

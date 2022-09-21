@@ -9,6 +9,7 @@ ENV JLS_PATH="/opt/jetbrains-license-server" \
   PUID="1000" \
   PGID="1000"
 
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY entrypoint.sh /entrypoint.sh
 ARG JLS_SHA256
 RUN apk add --update --no-cache \
@@ -21,6 +22,9 @@ RUN apk add --update --no-cache \
     zip \
     tzdata \
     nginx \
+    openrc \
+  && openrc \
+  && touch /run/openrc/softlevel \
   && mkdir -p /data "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \
   && echo "$JLS_SHA256  /tmp/jls.zip" | sha256sum -c - | grep OK \
@@ -29,7 +33,8 @@ RUN apk add --update --no-cache \
   && chmod a+x "$JLS_PATH/bin/license-server.sh" \
   && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
   && chmod a+x /entrypoint.sh \
-  && apt-get purge -y build-essential \
+  && chown nginx /etc/nginx/* -R \
+#  && apt-get purge -y build-essential \
   && addgroup -g ${PGID} jls \
   && adduser -u ${PUID} -G jls -h /data -s /bin/bash -D jls \
   && chown -R jls. /data "$JLS_PATH" \
@@ -42,7 +47,6 @@ RUN apk add --update --no-cache \
 
 # Install Nginx to fix HTTP headers modified by Azure's proxy
 # RUN apt-get install -y --no-install-recommends nginx
-COPY nginx.conf /etc/nginx/nginx.conf
 
 # forward request and error logs to docker log collector
 # RUN ln -sf /dev/stdout /var/log/nginx/access.log \
