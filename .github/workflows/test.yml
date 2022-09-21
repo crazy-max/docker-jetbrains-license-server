@@ -1,0 +1,76 @@
+name: test
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    branches:
+      - 'master'
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Prepare
+        id: prep
+        run: |
+          echo ::set-output name=build_tag::test
+          echo ::set-output name=container_name::jetbrains-license-server
+          echo ::set-output name=running_timeout::120
+          echo ::set-output name=running_log_check::is listening on
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Build
+        uses: docker/bake-action@v2
+        with:
+          targets: image-local
+        env:
+          DEFAULT_TAG: ${{ steps.prep.outputs.build_tag }}
+      -
+        name: Start container
+        run: |
+          docker rm -f ${{ steps.prep.outputs.container_name }} > /dev/null 2>&1 || true
+          docker run -d --name ${{ steps.prep.outputs.container_name }} \
+            -e "JLS_VIRTUAL_HOSTS=docker.test" \
+            ${{ steps.prep.outputs.build_tag }}
+      -
+        name: Test run
+        run: |
+          TIMEOUT=$((SECONDS + ${{ steps.prep.outputs.running_timeout }}))
+          while read LOGLINE; do
+            echo ${LOGLINE}
+            if [[ ${LOGLINE} == *"${{ steps.prep.outputs.running_log_check }}"* ]]; then
+              echo "🎉 Container up!"
+              break
+            fi
+            if [[ $SECONDS -gt ${TIMEOUT} ]]; then
+              >&2 echo "❌ Failed to run ${{ steps.prep.outputs.container_name }} container"
+              exit 1
+            fi
+          done < <(docker logs -f ${{ steps.prep.outputs.container_name }} 2>&1)
+
+          CONTAINER_STATUS=$(docker container inspect --format "{{.State.Status}}" ${{ steps.prep.outputs.container_name }})
+          if [[ ${CONTAINER_STATUS} != "running" ]]; then
+            >&2 echo "❌ Container ${{ steps.prep.outputs.container_name }} returned status '$CONTAINER_STATUS'"
+            exit 1
+          fi
+      -
+        name: Container logs
+        if: always()
+        run: |
+          docker logs ${{ steps.prep.outputs.container_name }}
+          docker rm -f ${{ steps.prep.outputs.container_name }} > /dev/null 2>&1 || true
