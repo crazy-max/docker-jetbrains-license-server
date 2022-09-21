@@ -9,6 +9,7 @@ ENV JLS_PATH="/opt/jetbrains-license-server" \
   PUID="1000" \
   PGID="1000"
 
+COPY entrypoint.sh /entrypoint.sh
 ARG JLS_SHA256
 RUN apk add --update --no-cache \
     bash \
@@ -51,7 +52,6 @@ RUN apt-get clean && apt auto-remove -y \
   && rm -rf /var/cache/apt/* /tmp/*
 
 COPY --from=yasu / /
-COPY entrypoint.sh /entrypoint.sh
 
 EXPOSE 2222 8080
 
