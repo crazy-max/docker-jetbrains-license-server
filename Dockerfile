@@ -48,8 +48,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 #         && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # cleanup packages
-RUN apt-get clean && apt auto-remove -y \
-  && rm -rf /var/cache/apt/* /tmp/*
+# RUN apt-get clean && apt auto-remove -y \
+#   && rm -rf /var/cache/apt/* /tmp/*
 
 COPY --from=yasu / /
 
