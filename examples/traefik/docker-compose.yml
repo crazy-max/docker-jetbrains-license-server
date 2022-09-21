@@ -1,0 +1,73 @@
+version: "3.5"
+
+services:
+  traefik:
+    image: traefik:2.5
+    container_name: traefik
+    command:
+      - "--global.checknewversion=false"
+      - "--global.sendanonymoususage=false"
+      - "--log=true"
+      - "--log.level=INFO"
+      - "--entrypoints.http=true"
+      - "--entrypoints.http.address=:80"
+      - "--entrypoints.http.http.redirections.entrypoint.to=https"
+      - "--entrypoints.http.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.https=true"
+      - "--entrypoints.https.address=:443"
+      - "--certificatesresolvers.letsencrypt"
+      - "--certificatesresolvers.letsencrypt.acme.storage=acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.email=webmaster@example.com"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=http"
+      - "--providers.docker"
+      - "--providers.docker.watch=true"
+      - "--providers.docker.exposedbydefault=false"
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+      - target: 443
+        published: 443
+        protocol: tcp
+    volumes:
+      - "./acme.json:/acme.json"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: always
+
+  msmtpd:
+    image: crazymax/msmtpd:latest
+    container_name: jls_msmtpd
+    env_file:
+      - "./msmtpd.env"
+    environment:
+      - "TZ"
+    restart: always
+
+  jls:
+    image: crazymax/jetbrains-license-server:latest
+    container_name: jls
+    depends_on:
+      - msmtpd
+    volumes:
+      - "jls:/data"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jls.entrypoints=https"
+      - "traefik.http.routers.jls.rule=Host(`jls.example.com`)"
+      - "traefik.http.routers.jls.tls=true"
+      - "traefik.http.routers.jls.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.jls.tls.domains[0].main=jls.example.com"
+      - "traefik.http.services.jls.loadbalancer.server.port=8000"
+    env_file:
+      - "./jls.env"
+    environment:
+      - "TZ"
+      - "PUID"
+      - "PGID"
+      - "JLS_SMTP_SERVER=msmtpd"
+      - "JLS_SMTP_PORT=2500"
+    restart: always
+
+volumes:
+  jls:
