@@ -20,6 +20,7 @@ RUN apk add --update --no-cache \
     shadow \
     zip \
     tzdata \
+    nginx \
   && mkdir -p /data "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \
   && echo "$JLS_SHA256  /tmp/jls.zip" | sha256sum -c - | grep OK \
@@ -40,7 +41,7 @@ RUN apk add --update --no-cache \
 # COPY sshd_config /etc/ssh/
 
 # Install Nginx to fix HTTP headers modified by Azure's proxy
-RUN apt-get install -y --no-install-recommends nginx
+# RUN apt-get install -y --no-install-recommends nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # forward request and error logs to docker log collector
