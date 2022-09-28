@@ -25,7 +25,7 @@ RUN apk add --update --no-cache \
     openrc \
   && openrc \
   && touch /run/openrc/softlevel \
-  && mkdir -p /data "$JLS_PATH" \
+  && mkdir -p /home "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \
   && echo "$JLS_SHA256  /tmp/jls.zip" | sha256sum -c - | grep OK \
   && unzip "/tmp/jls.zip" -d "$JLS_PATH" \
@@ -36,8 +36,8 @@ RUN apk add --update --no-cache \
   && chown nginx /etc/nginx/* -R \
 #  && apt-get purge -y build-essential \
   && addgroup -g ${PGID} jls \
-  && adduser -u ${PUID} -G jls -h /data -s /bin/bash -D jls \
-  && chown -R jls. /data "$JLS_PATH" \
+  && adduser -u ${PUID} -G jls -h /home -s /bin/bash -D jls \
+  && chown -R jls. /home "$JLS_PATH" \
   && rm -rf /tmp/*
 
 # SSH Server inside container for Azure App Service's web SSH console
@@ -60,7 +60,7 @@ COPY --from=yasu / /
 
 EXPOSE 2222 8080
 
-WORKDIR /data
+WORKDIR /home
 VOLUME [ "/data" ]
 # disabling IPv6 - not needed anymore
 # COPY license-server.jvmoptions.tmpl ${JLS_PATH}/conf/license-server.jvmoptions

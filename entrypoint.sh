@@ -13,7 +13,7 @@ JLS_PATH="/opt/jetbrains-license-server"
 JLS_LISTEN_ADDRESS="0.0.0.0"
 JLS_PORT=8000
 JLS_CONTEXT=${JLS_CONTEXT:-/}
-JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-/data/access-config.json}
+JLS_ACCESS_CONFIG=${JLS_ACCESS_CONFIG:-/home/access-config.json}
 JLS_PROXY_TYPE=${JLS_PROXY_TYPE:-https}
 JLS_SERVICE_LOGLEVEL=${JLS_SERVICE_LOGLEVEL:-warn}
 JLS_REPORTING_LOGLEVEL=${JLS_REPORTING_LOGLEVEL:-warn}
@@ -29,7 +29,7 @@ if [ -n "${PUID}" ] && [ "${PUID}" != "$(id -u jls)" ]; then
   sed -i -e "s/^jls:\([^:]*\):[0-9]*:\([0-9]*\)/jls:\1:${PUID}:\2/" /etc/passwd
 fi
 if [ -n "${PUID}" ] || [ -n "${PGID}" ]; then
-  chown -R jls:jls /data "$JLS_PATH"
+  chown -R jls:jls /home "$JLS_PATH"
 fi
 
 # Timezone
@@ -39,11 +39,13 @@ echo ${TZ} > /etc/timezone
 
 # Init
 echo "Initializing files and folders..."
-yasu jls:jls touch "/data/access-config.json"
+yasu jls:jls mkdir -p /home/registration
+yasu jls:jls touch "/home/access-config.json"
 
 # https://www.jetbrains.com/help/license_server/setting_host_and_port.html
 echo "Configuring Jetbrains License Server..."
 yasu jls:jls license-server configure --listen ${JLS_LISTEN_ADDRESS} --port ${JLS_PORT} --context ${JLS_CONTEXT}
+yasu jls:jls license-server configure --jb.license-server.base-dir=/home/registration
 
 # https://www.jetbrains.com/help/license_server/configuring_secure_connection.html
 if [ ! -z "$JLS_REVERSE_PROXY" ] ; then
@@ -148,7 +150,7 @@ cat > ${JLS_PATH}/web/WEB-INF/classes/log4j2.xml <<EOL
 EOL
 
 echo "Fixing perms..."
-chown -R jls:jls /data "$JLS_PATH"
+chown -R jls:jls /home "$JLS_PATH"
 
 # https://www.jetbrains.com/help/license_server/configuring_proxy_settings.html
 if [ -n "$JLS_PROXY_HOST" ] && [ -n "$JLS_PROXY_PORT" ] ; then
