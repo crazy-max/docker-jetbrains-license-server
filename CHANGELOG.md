@@ -1,5 +1,10 @@
 # Changelog
 
+## 33965-r0 (2022/12/29)
+
+* JetBrains License Server 33965 (#75)
+* Alpine Linux 3.17 (#74)
+
 ## 32800-r0 (2022/07/20)
 
 * JetBrains License Server 32800 (#70)
