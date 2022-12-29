@@ -2,7 +2,7 @@ ARG JLS_VERSION=33965
 ARG JLS_SHA256=06034fe006d6225bfcd3f309ef25898a9965899abe8b2ef26199ac8ab957f8eb
 
 FROM crazymax/yasu:latest AS yasu
-FROM alpine:3.16
+FROM alpine:3.17
 
 ENV JLS_PATH="/opt/jetbrains-license-server" \
   TZ="UTC" \
