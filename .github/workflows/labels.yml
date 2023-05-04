@@ -7,6 +7,10 @@ on:
     paths:
       - '.github/labels.yml'
       - '.github/workflows/labels.yml'
+  pull_request:
+    paths:
+      - '.github/labels.yml'
+      - '.github/workflows/labels.yml'
 
 jobs:
   labeler:
@@ -18,3 +22,5 @@ jobs:
       -
         name: Run Labeler
         uses: crazy-max/ghaction-github-labeler@v4
+        with:
+          dry-run: ${{ github.event_name == 'pull_request' }}
