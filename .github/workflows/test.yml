@@ -1,5 +1,9 @@
 name: test
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches:
@@ -21,14 +25,6 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Prepare
-        id: prep
-        run: |
-          echo ::set-output name=build_tag::test
-          echo ::set-output name=container_name::jetbrains-license-server
-          echo ::set-output name=running_timeout::120
-          echo ::set-output name=running_log_check::is listening on
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
