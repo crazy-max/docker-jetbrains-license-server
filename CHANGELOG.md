@@ -1,5 +1,9 @@
 # Changelog
 
+## 33965-r1 (2023/08/30)
+
+* Alpine Linux 3.18 (#82)
+
 ## 33965-r0 (2022/12/29)
 
 * JetBrains License Server 33965 (#75)
