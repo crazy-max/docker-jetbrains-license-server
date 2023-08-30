@@ -60,10 +60,10 @@ docker buildx bake image-all
 
 ## Image
 
-| Registry                                                                                         | Image                           |
-|--------------------------------------------------------------------------------------------------|---------------------------------|
-| [Docker Hub](https://hub.docker.com/r/crazymax/jetbrains-license-server/)                                            | `crazymax/jetbrains-license-server`                 |
-| [GitHub Container Registry](https://github.com/users/crazy-max/packages/container/package/jetbrains-license-server)  | `ghcr.io/crazy-max/jetbrains-license-server`        |
+| Registry                                                                                                            | Image                                        |
+|---------------------------------------------------------------------------------------------------------------------|----------------------------------------------|
+| [Docker Hub](https://hub.docker.com/r/crazymax/jetbrains-license-server/)                                           | `crazymax/jetbrains-license-server`          |
+| [GitHub Container Registry](https://github.com/users/crazy-max/packages/container/package/jetbrains-license-server) | `ghcr.io/crazy-max/jetbrains-license-server` |
 
 ## Environment variables
 
@@ -94,7 +94,11 @@ docker buildx bake image-all
 
 * `/data`: Contains [registration data](https://www.jetbrains.com/help/license_server/migrate.html) and configuration
 
-> :warning: Note that the volumes should be owned by the user/group with the specified `PUID` and `PGID`. If you don't give the volume correct permissions, the container may not start.
+> **Warning**
+>
+> Note that the volumes should be owned by the user/group with the specified
+> `PUID` and `PGID`. If you don't give the volume correct permissions, the
+> container may not start.
 
 ## Ports
 
@@ -104,11 +108,14 @@ docker buildx bake image-all
 
 ### Docker Compose
 
-Docker compose is the recommended way to run this image. Copy the content of folder [examples/compose](examples/compose) in `/var/jls/` on your host for example. Edit the compose and env files with your preferences and run the following commands:
+Docker compose is the recommended way to run this image. Copy the content of
+folder [examples/compose](examples/compose) in `/var/jls/` on your host for
+example. Edit the compose and env files with your preferences and run the
+following commands:
 
 ```bash
-docker-compose up -d
-docker-compose logs -f
+docker compose up -d
+docker compose logs -f
 ```
 
 ### Command line
@@ -128,13 +135,15 @@ $ docker run -d -p 8000:8000 --name jetbrains_license_server \
 Recreate the container whenever I push an update:
 
 ```bash
-docker-compose pull
-docker-compose up -d
+docker compose pull
+docker compose up -d
 ```
 
 ## Notes
 
-If you have any trouble using the license server, check the official [Troubleshooting page](https://www.jetbrains.com/help/license_server/troubleshooting.html) of Jetbrains.
+If you have any trouble using the license server, check the official
+[Troubleshooting page](https://www.jetbrains.com/help/license_server/troubleshooting.html)
+of Jetbrains.
 
 ### Error 403 Passed value of header "Host" is not allowed
 
@@ -144,7 +153,8 @@ If you've got the following message :
 Passed value of header "Host" is not allowed. Please contact your license server administrator.
 ```
 
-That's because the license server is running behind a reverse proxy. Please configure virtual hosts using the `JLS_VIRTUAL_HOSTS` variable.
+That's because the license server is running behind a reverse proxy. Please
+configure virtual hosts using the `JLS_VIRTUAL_HOSTS` variable.
 
 ## Contributing
 

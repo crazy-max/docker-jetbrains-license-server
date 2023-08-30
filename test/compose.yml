@@ -1,20 +1,9 @@
-version: "3.5"
+name: jls
 
 services:
-  msmtpd:
-    image: crazymax/msmtpd:latest
-    container_name: jls_msmtpd
-    env_file:
-      - "./msmtpd.env"
-    environment:
-      - "TZ"
-    restart: always
-
   jls:
-    image: crazymax/jetbrains-license-server:latest
-    container_name: jls
-    depends_on:
-      - msmtpd
+    image: ${JLS_IMAGE:-crazymax/jetbrains-license-server}
+    container_name: ${JLS_CONTAINER:-jetbrains-license-server}
     ports:
       - target: 8000
         published: 8000

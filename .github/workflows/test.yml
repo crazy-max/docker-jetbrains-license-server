@@ -39,12 +39,13 @@ jobs:
         env:
           DEFAULT_TAG: ${{ env.BUILD_TAG }}
       -
-        name: Start container
+        name: Start
         run: |
-          docker rm -f ${{ env.CONTAINER_NAME }} > /dev/null 2>&1 || true
-          docker run -d --name ${{ env.CONTAINER_NAME }} \
-            -e "JLS_VIRTUAL_HOSTS=docker.test" \
-            ${{ env.BUILD_TAG }}
+          docker compose up -d
+        working-directory: test
+        env:
+          JLS_IMAGE: ${{ env.BUILD_TAG }}
+          JLS_CONTAINER: ${{ env.CONTAINER_NAME }}
       -
         name: Check container logs
         uses: crazy-max/.github/.github/actions/container-logs-check@main
@@ -53,8 +54,11 @@ jobs:
           log_check: "is listening on"
           timeout: 120
       -
-        name: Container logs
+        name: Logs
         if: always()
         run: |
-          docker logs ${{ env.CONTAINER_NAME }}
-          docker rm -f ${{ env.CONTAINER_NAME }} > /dev/null 2>&1 || true
+          docker compose logs
+        working-directory: test
+        env:
+          JLS_IMAGE: ${{ env.BUILD_TAG }}
+          JLS_CONTAINER: ${{ env.CONTAINER_NAME }}

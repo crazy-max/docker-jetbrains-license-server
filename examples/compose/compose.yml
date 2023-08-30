@@ -1,0 +1,35 @@
+name: jls
+
+services:
+  msmtpd:
+    image: crazymax/msmtpd:latest
+    container_name: jls_msmtpd
+    env_file:
+      - "./msmtpd.env"
+    environment:
+      - "TZ"
+    restart: always
+
+  jls:
+    image: crazymax/jetbrains-license-server:latest
+    container_name: jls
+    depends_on:
+      - msmtpd
+    ports:
+      - target: 8000
+        published: 8000
+        protocol: tcp
+    volumes:
+      - "jls:/data"
+    env_file:
+      - "./jls.env"
+    environment:
+      - "TZ"
+      - "PUID"
+      - "PGID"
+      - "JLS_SMTP_SERVER=msmtpd"
+      - "JLS_SMTP_PORT=2500"
+    restart: always
+
+volumes:
+  jls:
