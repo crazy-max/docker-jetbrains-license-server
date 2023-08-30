@@ -1,3 +1,5 @@
+name: jls
+
 services:
   jls:
     image: ${JLS_IMAGE:-crazymax/jetbrains-license-server}
