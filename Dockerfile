@@ -1,14 +1,16 @@
+# syntax=docker/dockerfile:1
+
 ARG JLS_VERSION=33965
 ARG JLS_SHA256=06034fe006d6225bfcd3f309ef25898a9965899abe8b2ef26199ac8ab957f8eb
+ARG ALPINE_VERSION=3.18
 
 FROM crazymax/yasu:latest AS yasu
-FROM alpine:3.17
 
+FROM alpine:${ALPINE_VERSION}
 ENV JLS_PATH="/opt/jetbrains-license-server" \
   TZ="UTC" \
   PUID="1000" \
   PGID="1000"
-
 ARG JLS_SHA256
 RUN apk add --update --no-cache \
     bash \
