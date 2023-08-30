@@ -1,0 +1,22 @@
+services:
+  jls:
+    image: ${JLS_IMAGE:-crazymax/jetbrains-license-server}
+    container_name: ${JLS_CONTAINER:-jetbrains-license-server}
+    ports:
+      - target: 8000
+        published: 8000
+        protocol: tcp
+    volumes:
+      - "jls:/data"
+    env_file:
+      - "./jls.env"
+    environment:
+      - "TZ"
+      - "PUID"
+      - "PGID"
+      - "JLS_SMTP_SERVER=msmtpd"
+      - "JLS_SMTP_PORT=2500"
+    restart: always
+
+volumes:
+  jls:
