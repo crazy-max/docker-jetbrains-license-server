@@ -1,5 +1,10 @@
 # Changelog
 
+## 39687-r0 (2023/12/30)
+
+* JetBrains License Server 39687 (#91)
+* Alpine Linux 3.19 (#92)
+
 ## 33965-r1 (2023/08/30)
 
 * Alpine Linux 3.18 (#82)
