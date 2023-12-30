@@ -2,9 +2,7 @@
 
 ARG JLS_VERSION=39687
 ARG JLS_SHA256=bcb5fa802993894c61bc4da96ffd823cbb90a3151ab4da57ae7cc8c4301d3eab
-ARG ALPINE_VERSION=3.18
-
-FROM crazymax/yasu:latest AS yasu
+ARG ALPINE_VERSION=3.19
 
 FROM alpine:${ALPINE_VERSION}
 ENV JLS_PATH="/opt/jetbrains-license-server" \
@@ -33,7 +31,7 @@ RUN apk add --update --no-cache \
   && chown -R jls. /data "$JLS_PATH" \
   && rm -rf /tmp/*
 
-COPY --from=yasu / /
+COPY --from=crazymax/yasu:latest / /
 COPY entrypoint.sh /entrypoint.sh
 
 EXPOSE 8000
