@@ -93,8 +93,7 @@ docker buildx bake image-all
 
 * `/data`: Contains [registration data](https://www.jetbrains.com/help/license_server/migrate.html) and configuration
 
-> **Warning**
->
+> [!WARNING]
 > Note that the volumes should be owned by the user/group with the specified
 > `PUID` and `PGID`. If you don't give the volume correct permissions, the
 > container may not start.
