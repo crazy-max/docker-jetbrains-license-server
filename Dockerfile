@@ -2,8 +2,7 @@
 
 ARG JLS_VERSION=39687
 ARG JLS_SHA256=bcb5fa802993894c61bc4da96ffd823cbb90a3151ab4da57ae7cc8c4301d3eab
-ARG ALPINE_VERSION=3.19
-
+ARG ALPINE_VERSION=3.21
 FROM alpine:${ALPINE_VERSION}
 ENV JLS_PATH="/opt/jetbrains-license-server" \
   TZ="UTC" \
@@ -28,7 +27,7 @@ RUN apk add --update --no-cache \
   && ln -sf "$JLS_PATH/bin/license-server.sh" "/usr/local/bin/license-server" \
   && addgroup -g ${PGID} jls \
   && adduser -u ${PUID} -G jls -h /data -s /bin/bash -D jls \
-  && chown -R jls. /data "$JLS_PATH" \
+  && chown -R jls:jls /data "$JLS_PATH" \
   && rm -rf /tmp/*
 
 COPY --from=crazymax/yasu:latest / /
