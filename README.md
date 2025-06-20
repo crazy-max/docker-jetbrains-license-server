@@ -9,6 +9,14 @@
   <a href="https://www.paypal.me/crazyws"><img src="https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square" alt="Donate Paypal"></a>
 </p>
 
+## ⚠️ Discontinued
+
+Following JetBrains' announcement that the JetBrains License Server will be
+[discontinued and taken out of service on December 31, 2025](https://blog.jetbrains.com/blog/2024/10/25/ide-services-cloud-release-and-floating-license-server-end-of-life-announcements/),
+this image is no longer maintained.
+
+You'll need to switch to a new license management method by this date. [Learn more](https://www.jetbrains.com/help/license_server/License_Server_discontinuation.html)
+
 ## About
 
 [JetBrains License Server](https://www.jetbrains.com/help/license_server/getting_started.html)
